@@ -1,22 +1,28 @@
+---
+parent: Harmony 3 motor control application examples
+title: Sensored PMSM FOC using SAM RH71 EK and LX7720 DB
+has_children: false
+has_toc: false
+nav_order: 1
+---
+
+[![MCHP](https://www.microchip.com/ResourcePackages/Microchip/assets/dist/images/logo.png)](https://www.microchip.com)
+
 # PMSM FOC using Quadrature Encoder with SAMRH71-EK and LX7720 boards
 
-This example shows how to perform motor control using the SAMRH71-EK board connected to the LX7720 board. The control strategy is the sensored FOC, in which rotor position is determined by the Quadrature Encoder. And speed is calculated from the position. 
+This example shows how to perform motor control using the SAMRH71-EK board connected to the LX7720 board. The control strategy is the sensored FOC, in which rotor position is determined by the Quadrature Encoder and speed is calculated from the position. 
 
-## Building The Application 
-The parent folder for all the MPLAB X IDE projects for this application is given below:
+## Description
+Permanent Magnet Synchronous Motor (PMSM) is controlled using Field Oriented Control (FOC). Rotor position and speed is determined from quadrature encoder in LX7720. Motor start/stop operation is controlled by the switch and motor speed can be changed by the on-board potentiometer. Waveforms and variables can be monitored at runtime using X2CScope. 
 
-**Application Path** : motor_control\apps\pmsm_foc_encoder_lx7720_sam_rh71_ek\firmware
+Key features enabled in this project are:
 
-To build the application, refer to the table below and open the appropriate project file in MPLABX IDE.
-
-| Project Name  | Description   |
-| ------------- |:-------------:|
-| sam_rh71_ek.X | SAM RH71 Evaluation Kit board  |
-	
+- Dual shunt current measurement
+- Speed control loop
 
 ## MPLAB Harmony Configurations 
+![MHC Project Graph](images/pmsm_foc_encoder_sam_rh71_project_graph.jpg)
 
-Refer to the MHC project graph for the components used and the respective configuration options.
 
 * PWM Peripheral:
     * This peripheral is used to generated three phases synchronous PWM waveforms. Fault functionality is also enabled to switch off the output waveforms asynchronously
@@ -55,47 +61,21 @@ The FOC control loop is executed in an interrupt routine generate by a timer cou
 
 ![PWM and Current samples diagram](images/pwm_current_sample_diagram.jpg "PWM and Current samples diagram")
 
-## Hardware Setup
+## Development Kits
 
-1. Project sam_rh71_xult.X
-    * Hardware Used
-        * SAM RH71 Evaluation Kit
-        * LX7720 board
-        * Hurst DMA0204024B101 BLDC Motor
-    * Hardware Setup
-        * Connect the debugger probe to J33
-        * Connect the USB port on the board to the computer using a mini USB cable.
-        * Connect the 3 motors phases to the LX board.
-        * Connect the motor encoders A and B respectively to LX7720 BLI1 and BLI2. Connecter encoder VCC to LX7720 5V and encoder GND to LX7720 SGND.
-        * LX7720 jumpers configuration
-            * SM_EN to ON with J39
-            * SCP forced high with J38
-        * Connect the followings signals between SAMRH71-EK board and LX7720 board.
+### SAM RH71 Evaluation Kit and LX7720 Daughter Board
+#### Downloading and building the application
 
-            | SAMRH71F20-EK        | LX7720                |
-            | -------------        |:-------------:        |
-            | PA4 (J24.8)          |   LD_IN_A_C   (J20.2) | 
-            | PA0 (J24.7)          |   UD_IN_A_C   (J20.1) | 
-            | PA5 (J24.6)          |   LD_IN_B_C   (J20.6) | 
-            | PA1 (J24.9)          |   UD_IN_B_C   (J20.5) | 
-            | PA6 (J24.17)         |   LD_IN_C_C   (J20.10)|
-            | PA2 (J24.16)         |   UD_IN_C_C   (J20.9) |
-            | PA09 (J24.3)         |   OC_FAULT    (J20.32)|
-            | PC21 (J30.16) (TCLK9)|   SNS_OUT_A   (J20.3) |
-            | PC28 (J30.9) (TCLK10)|   SNS_OUT_B   (J20.7) |
-            | PB9 (J30.6) (TIOB9)  |   BLO2        (J20.36)|
-            | PB10 (J30.7) (TIOA9) |   BLO1        (J20.35)|
-            | PA11 (J24.5) (PCK0)  |   MOD_CLK     (J20.18)|
-            | PA10 (J24.4) (PCK2)  |   CP_CLK      (J20.17)|
+To clone or download this application from Github, go to the [main page of this repository](https://github.com/Microchip-MPLAB-Harmony/mc_apps_sam_rh71) and then click **Clone** button to clone this repository or download as zip file.
+This content can also be downloaded using content manager by following these [instructions](https://github.com/Microchip-MPLAB-Harmony/contentmanager/wiki).
 
-        * Add external buttons with pullup and debounce filter
-            * Start/Stop switch : PA22 (J25.6)
-            * Increase speed switch : PA23 (J25.3)
-            * Decrease speed switch : PA24 (J25.4)
+Path of the application within the repository is **apps/pmsm_foc_encoder_lx7720_sam_rh71_ek** .
 
-## Running The Application
+To build the application, refer to the following table and open the project using its IDE.
 
-1. Build and Program the application using the MPLAB X IDE.
-2. Press Start/Stop switch (PA22) to start the motor, it will set LED0 indicating the control loop is running.
-3. Increase speed with switch (PA23) and decrease speed with switch (PA24).
-4. Stop the motor by pressing again PB0.
+| Project Name      | Description                                    |
+| ----------------- | ---------------------------------------------- |
+| sam_rh71_ek.X | MPLABX project for SAM RH71 Evaluation Kit and LX7720 Daughter Board |
+|||
+
+[Hardware Setup and Running The Application on SAM RH71 Evaluation Kit  with LX7720 Daughter Board](../docs/sam_rh71_ek_board_lx7720_db.md)

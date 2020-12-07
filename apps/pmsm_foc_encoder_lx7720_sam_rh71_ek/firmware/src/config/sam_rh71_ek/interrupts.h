@@ -1,20 +1,20 @@
 /*******************************************************************************
-  NVIC PLIB Header
+ System Interrupts File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_nvic.h
+    interrupt.h
 
   Summary:
-    NVIC PLIB Header File
+    Interrupt vectors mapping
 
   Description:
-    None
+    This file contains declarations of device vectors used by Harmony 3
+ *******************************************************************************/
 
-*******************************************************************************/
-
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -36,36 +36,32 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
-
-#ifndef PLIB_NVIC_H
-#define PLIB_NVIC_H
-
-#include <stddef.h>
-#include <stdbool.h>
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    extern "C" {
-
-#endif
+ *******************************************************************************/
 // DOM-IGNORE-END
 
+#ifndef INTERRUPTS_H
+#define INTERRUPTS_H
 
-/***************************** NVIC Inline *******************************/
+// *****************************************************************************
+// *****************************************************************************
+// Section: Included Files
+// *****************************************************************************
+// *****************************************************************************
+#include <stdint.h>
 
-void NVIC_Initialize( void );
-void NVIC_INT_Enable( void );
-bool NVIC_INT_Disable( void );
-void NVIC_INT_Restore( bool state );
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: Handler Routines
+// *****************************************************************************
+// *****************************************************************************
+
+void Reset_Handler (void);
+void NonMaskableInt_Handler (void);
+void HardFault_Handler (void);
+void TC0_CH0_InterruptHandler (void);
+void TC0_CH1_InterruptHandler (void);
 
 
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
 
-    }
-
-#endif
-// DOM-IGNORE-END
-#endif // PLIB_NVIC_H
+#endif // INTERRUPTS_H

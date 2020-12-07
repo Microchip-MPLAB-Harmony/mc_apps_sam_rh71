@@ -1,20 +1,22 @@
 /*******************************************************************************
-  NVIC PLIB Header
+  Device Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_nvic.h
+    device.h
 
   Summary:
-    NVIC PLIB Header File
+    This file includes the selected device from within the project.
+    The device will provide access to respective device packs.
 
   Description:
     None
 
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -37,35 +39,27 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-
-#ifndef PLIB_NVIC_H
-#define PLIB_NVIC_H
-
-#include <stddef.h>
-#include <stdbool.h>
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    extern "C" {
-
-#endif
 // DOM-IGNORE-END
 
+#ifndef DEVICE_H
+#define DEVICE_H
 
-/***************************** NVIC Inline *******************************/
-
-void NVIC_Initialize( void );
-void NVIC_INT_Enable( void );
-bool NVIC_INT_Disable( void );
-void NVIC_INT_Restore( bool state );
-
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    }
-
+#pragma GCC diagnostic push
+#ifndef __cplusplus
+#pragma GCC diagnostic ignored "-Wnested-externs"
 #endif
-// DOM-IGNORE-END
-#endif // PLIB_NVIC_H
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wattributes"
+#pragma GCC diagnostic ignored "-Wundef"
+#ifndef DONT_USE_PREDEFINED_CORE_HANDLERS
+    #define DONT_USE_PREDEFINED_CORE_HANDLERS
+#endif //DONT_USE_PREDEFINED_CORE_HANDLERS
+#ifndef DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS
+    #define DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS
+#endif //DONT_USE_PREDEFINED_PERIPHERALS_HANDLERS
+#include "atsamrh71f20c.h"
+#pragma GCC diagnostic pop
+#include "device_cache.h"
+#include "toolchain_specifics.h"
+
+#endif //DEVICE_H

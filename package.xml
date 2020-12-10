@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Package name="replaceme">
+<Package name="mc_apps_sam_rh71">
     <Dependencies>
+        <Dependency name="csp" version="v3.8.3"/>
+        <Dependency name="motor_control" version="v3.6.0"/>
     </Dependencies>
 </Package>

@@ -1,3 +1,10 @@
+---
+parent: Hardware Setup
+title: Setup for quadrature encoder mode
+has_children: false
+has_toc: false
+---
+
 # SAM RH71 Evaluation Kit with LX7720 Daughter Board
 ## Setting up the hardware
 

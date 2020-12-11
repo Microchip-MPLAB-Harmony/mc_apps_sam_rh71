@@ -1,9 +1,8 @@
 ---
-parent: Harmony 3 motor control application examples
-title: Sensored PMSM FOC using SAM RH71 EK and LX7720 DB
+parent: Motor Control Application Examples for SAM RH71 family
+title: Encoder based PMSM FOC using SAM RH71 EK and LX7720 DB
 has_children: false
 has_toc: false
-nav_order: 1
 ---
 
 [![MCHP](https://www.microchip.com/ResourcePackages/Microchip/assets/dist/images/logo.png)](https://www.microchip.com)
@@ -73,9 +72,7 @@ Path of the application within the repository is **apps/pmsm_foc_encoder_lx7720_
 
 To build the application, refer to the following table and open the project using its IDE.
 
-| Project Name      | Description                                    |
-| ----------------- | ---------------------------------------------- |
-| sam_rh71_ek.X | MPLABX project for SAM RH71 Evaluation Kit and LX7720 Daughter Board |
-|||
-
-[Hardware Setup and Running The Application on SAM RH71 Evaluation Kit  with LX7720 Daughter Board](../docs/sam_rh71_ek_board_lx7720_db.md)
+| Project Name      | Description                                    | Demo User Guide |
+| ----------------- | ---------------------------------------------- | ------------------ | 
+| sam_rh71_ek.X | MPLABX project for SAM RH71 Evaluation Kit and LX7720 Daughter Board | [Hardware Setup and Running The Application on SAM RH71 Evaluation Kit  with LX7720 Daughter Board](../docs/sam_rh71_ek_board_lx7720_db.md)
+||||

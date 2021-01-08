@@ -39,10 +39,10 @@ notes and licensing information.
 These applications contain static algorithm code and peripherals are configured using MHC. Configurations can be changed in userparam.h file. 
 
 
-| Name | Description|
-|:---------|:-----------|
-| [PMSM FOC using Quadrature Encoder](apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.md) | Sensored Field Oriented Control of PMSM using Quadrature Encoder |
-|||
+| Name | Description|Control Board|Inverter Board|
+|:-----|:-----------|:------------|:-------------|
+| [PMSM FOC using Quadrature Encoder](apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.md) | Sensored Field Oriented Control of PMSM using Quadrature Encoder | [SAMRH71F20-EK Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/SAMRH71F20-EK) |[LX7720 Daughter Board](https://www.microsemi.com/product-directory/space-system-managers/3708-position-motor-controller-ic#resources) |
+|||||
 
 [![License](https://img.shields.io/badge/license-Harmony%20license-orange.svg)](https://github.com/Microchip-MPLAB-Harmony/mc/blob/master/mplab_harmony_license.md)
 [![Latest release](https://img.shields.io/github/release/Microchip-MPLAB-Harmony/mc.svg)](https://github.com/Microchip-MPLAB-Harmony/mc/releases/latest)

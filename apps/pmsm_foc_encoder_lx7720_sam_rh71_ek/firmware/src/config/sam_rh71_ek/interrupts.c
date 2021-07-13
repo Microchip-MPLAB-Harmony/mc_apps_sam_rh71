@@ -128,7 +128,7 @@ extern void FLEXRAMECC_INTNOFIX_Handler ( void ) __attribute__((weak, alias("Dum
 extern void SHA_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void FLEXCOM8_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void FLEXCOM9_Handler           ( void ) __attribute__((weak, alias("Dummy_Handler")));
-extern void WDT1_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
+extern void RSWDT_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void QSPI_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void HEFC_INT0_Handler          ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void HEFC_INTFIX_Handler        ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -223,7 +223,7 @@ const H3DeviceVectors exception_table=
     .pfnSHA_Handler                = SHA_Handler,
     .pfnFLEXCOM8_Handler           = FLEXCOM8_Handler,
     .pfnFLEXCOM9_Handler           = FLEXCOM9_Handler,
-    .pfnWDT1_Handler               = WDT1_Handler,
+    .pfnRSWDT_Handler              = RSWDT_Handler,
     .pfnQSPI_Handler               = QSPI_Handler,
     .pfnHEFC_INT0_Handler          = HEFC_INT0_Handler,
     .pfnHEFC_INTFIX_Handler        = HEFC_INTFIX_Handler,

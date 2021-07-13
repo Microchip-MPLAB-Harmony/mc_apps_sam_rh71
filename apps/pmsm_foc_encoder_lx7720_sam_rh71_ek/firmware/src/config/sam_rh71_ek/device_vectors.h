@@ -129,7 +129,7 @@ typedef struct _H3DeviceVectors
   pfn_handler_t pfnSHA_Handler;                     /* 44 Secure Hash Algorithm */
   pfn_handler_t pfnFLEXCOM8_Handler;                /* 45 FLEXCOM 8 */
   pfn_handler_t pfnFLEXCOM9_Handler;                /* 46 FLEXCOM 9 */
-  pfn_handler_t pfnWDT1_Handler;                    /* 47 Watchdog Timer 1 */
+  pfn_handler_t pfnRSWDT_Handler;                   /* 47 Reinforced Secure Watchdog Timer */
   pfn_handler_t pfnReserved48;
   pfn_handler_t pfnQSPI_Handler;                    /* 49 Quad I/O Serial Peripheral Interface */
   pfn_handler_t pfnHEFC_INT0_Handler;               /* 50 HEFC Flash Interrupts */

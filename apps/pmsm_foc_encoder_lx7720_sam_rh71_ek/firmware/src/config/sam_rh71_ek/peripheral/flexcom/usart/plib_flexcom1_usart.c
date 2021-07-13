@@ -50,6 +50,7 @@
 /* This section lists the other files that are included in this file.
 */
 #include "plib_flexcom1_usart.h"
+#include "interrupts.h"
 
 
 // *****************************************************************************
@@ -97,16 +98,18 @@ void FLEXCOM1_USART_Initialize( void )
     FLEXCOM1_REGS->FLEX_US_CR = (FLEX_US_CR_RSTRX_Msk | FLEX_US_CR_RSTTX_Msk | FLEX_US_CR_RSTSTA_Msk );
 
 
+    /* Setup transmitter timeguard register */
     FLEXCOM1_REGS->FLEX_US_TTGR = 0;
-
-    /* Enable FLEXCOM1 USART */
-    FLEXCOM1_REGS->FLEX_US_CR = (FLEX_US_CR_TXEN_Msk | FLEX_US_CR_RXEN_Msk);
 
     /* Configure FLEXCOM1 USART mode */
     FLEXCOM1_REGS->FLEX_US_MR = ( FLEX_US_MR_USART_MODE_NORMAL | FLEX_US_MR_USCLKS_MCK | FLEX_US_MR_CHRL_8_BIT | FLEX_US_MR_PAR_NO | FLEX_US_MR_NBSTOP_1_BIT | (0 << FLEX_US_MR_OVER_Pos));
 
     /* Configure FLEXCOM1 USART Baud Rate */
     FLEXCOM1_REGS->FLEX_US_BRGR = FLEX_US_BRGR_CD(27);
+
+    /* Enable FLEXCOM1 USART */
+    FLEXCOM1_REGS->FLEX_US_CR = (FLEX_US_CR_TXEN_Msk | FLEX_US_CR_RXEN_Msk);
+
 
     return;
 }
@@ -299,4 +302,5 @@ bool FLEXCOM1_USART_ReceiverIsReady( void )
         return false;
     }
 }
+
 

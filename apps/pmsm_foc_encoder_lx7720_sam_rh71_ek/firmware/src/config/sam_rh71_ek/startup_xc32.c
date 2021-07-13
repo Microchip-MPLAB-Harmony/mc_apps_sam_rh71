@@ -29,7 +29,6 @@
 #include "device.h"
 #include "interrupts.h"
 
-
 /*
  *  The MPLAB X Simulator does not yet support simulation of programming the
  *  GPNVM bits yet. We can remove this once it supports the FRDY bit.

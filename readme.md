@@ -1,5 +1,5 @@
 ﻿---
-title: Motor Control Application Examples for SAM RH71 family
+title: Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAM RH71 family
 nav_order: 1
 has_children: true
 has_toc: false

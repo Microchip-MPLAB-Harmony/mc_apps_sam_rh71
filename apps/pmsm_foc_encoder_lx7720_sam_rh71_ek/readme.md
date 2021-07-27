@@ -1,5 +1,5 @@
 ---
-parent: Motor Control Application Examples for SAM RH71 family
+parent: Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAM RH71 family
 title: Encoder based PMSM FOC using SAM RH71 EK and LX7720 DB
 has_children: false
 has_toc: false

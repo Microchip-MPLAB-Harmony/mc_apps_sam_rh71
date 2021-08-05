@@ -4,27 +4,27 @@
 	"content": {
 		"metaDataVersion": "1.1.0",
 		"name": "com.microchip.mcu32.mplabx.project.mc_apps_sam_rh71_pmsm_foc_encoder_lx7720_sam_rh71_ek_sam_rh71_ek",
-		"version": "3.0.0",
+		"version": "3.1.0",
 		"displayName": "PMSM FOC using Quadrature Encoder with SAMRH71-EK and LX7720 boards Example for SAM RH71 Family",
 		"projectName": "pmsm_foc_encoder_lx7720_sam_rh71_ek",
 		"shortDescription": "This example shows how to perform motor control using the SAMRH71-EK board connected to the LX7720 board. The control strategy is the sensored FOC, in which rotor position is determined by the Quadrature Encoder and speed is calculated from the position. ",
 		"ide": {
 			"name": "MPLABX",
-			"semverRange": ">=5.45.0"
+			"semverRange": ">=5.50.0"
 		},
 		"compiler": [
 			{
 				"name": "XC32",
-				"semverRange": ">=2.50.0"
+				"semverRange": ">=3.01"
 			}
 		],
 		"dfp": {
 			"name": "SAMRH71_DFP",
-			"semverRange": "^2.1.105"
+			"semverRange": "^2.2.112"
 		},
 		"configurator": {
 			"name": "MHC",
-			"semverRange": ">=3.6.2"
+			"semverRange": ">=3.6.4"
 		},
 		"device": {
 			"metaDataVersion": "1.0.0",

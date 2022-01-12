@@ -1,5 +1,5 @@
-/**
- * \brief Component description for FLEXCOM
+/*
+ * Component description for FLEXCOM
  *
  * Copyright (c) 2021 Microchip Technology Inc. and its subsidiaries.
  *
@@ -20,7 +20,7 @@
  *
  */
 
-/* file generated from device description version 2021-01-12T20:14:51Z */
+/* file generated from device description version 2021-05-04T16:48:28Z */
 #ifndef _SAMRH71_FLEXCOM_COMPONENT_H_
 #define _SAMRH71_FLEXCOM_COMPONENT_H_
 

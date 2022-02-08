@@ -1,4 +1,4 @@
-<config configName="sam_rh71_ek" projectName="pmsm_foc_encoder_lx7720_sam_rh71_ek" configVersion="1.1" device="ATSAMRH71F20C" deviceLibraryClass="com.microchip.mcc.harmony.Harmony3Library" coreVersion="5.4.0">
+<config configName="sam_rh71_ek" projectName="pmsm_foc_encoder_lx7720_sam_rh71_ek" configVersion="1.1" device="ATSAMRH71F20C" deviceLibraryClass="com.microchip.mcc.harmony.Harmony3Library" coreVersion="5.4.1">
    <usedPackages class="java.util.ArrayList"/>
    <usedClasses class="java.util.TreeMap">
       <entry>
@@ -35,7 +35,7 @@
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.harmony.Harmony3Library" version="1.0.3"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.harmony.Harmony3Library" version="1.0.9"/>
    </usedLibraries>
    <tokenMap class="java.util.TreeMap">
       <entry>
@@ -7224,7 +7224,7 @@
       </entry>
       <entry>
          <file>..\src\config\sam_rh71_ek\startup_xc32.c</file>
-         <hash>de1a9e50e080e6f11abde9824a5e590d33edaeccc71548523bdd7050f53b7e1b</hash>
+         <hash>a1216983d1c5c64b03e64da6ef259ce33aa87f11a0350ef0048ade26c6cac534</hash>
       </entry>
       <entry>
          <file>..\src\packs\ATSAMRH71F20C_DFP\instance\gmac.h</file>

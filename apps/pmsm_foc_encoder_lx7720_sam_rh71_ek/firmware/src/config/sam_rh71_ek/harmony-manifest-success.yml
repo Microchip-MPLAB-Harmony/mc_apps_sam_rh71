@@ -7,7 +7,7 @@ project: pmsm_foc_encoder_lx7720_sam_rh71_ek
 creation_date: 2022-03-01T11:48:11.268+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: Standalone            # [IDE|Standalone|Headless]
-mhc_version: unknown
+mhc_version: NA
 mplabx_version: NA        # if MPLAB X plugin only
 plugin_version: NA        # if MPLAB X plugin only
 compiler: xc32

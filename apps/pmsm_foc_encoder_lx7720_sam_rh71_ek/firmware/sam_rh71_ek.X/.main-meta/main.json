@@ -10,21 +10,21 @@
 		"shortDescription": "This example shows how to perform motor control using the SAMRH71-EK board connected to the LX7720 board. The control strategy is the sensored FOC, in which rotor position is determined by the Quadrature Encoder and speed is calculated from the position. ",
 		"ide": {
 			"name": "MPLABX",
-			"semverRange": ">=5.50.0"
+			"semverRange": ">=6.00.0"
 		},
 		"compiler": [
 			{
 				"name": "XC32",
-				"semverRange": ">=3.1.0"
+				"semverRange": ">=4.00.0"
 			}
 		],
 		"dfp": {
 			"name": "SAMRH71_DFP",
-			"semverRange": "^2.2.112"
+			"semverRange": "^2.4.157"
 		},
 		"configurator": {
-			"name": "MHC",
-			"semverRange": ">=3.6.4"
+			"name": "MCC",
+			"semverRange": ">=1.0.9"
 		},
 		"device": {
 			"metaDataVersion": "1.0.0",

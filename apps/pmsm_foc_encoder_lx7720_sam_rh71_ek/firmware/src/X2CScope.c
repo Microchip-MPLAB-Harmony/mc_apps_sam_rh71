@@ -1,3 +1,8 @@
+/* MISRA C-2012 Rule 3.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_3_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1"
+
 /*
  * Copyright (c) 2013, Linz Center of Mechatronics GmbH (LCM) http://www.lcm.at/
  * All rights reserved.
@@ -30,6 +35,11 @@
 /*
  * This file is part of X2C. http://www.mechatronic-simulation.org/
  */
+
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
 #include "X2CScopeCommunication.h"
 #include "X2CScope.h"
 

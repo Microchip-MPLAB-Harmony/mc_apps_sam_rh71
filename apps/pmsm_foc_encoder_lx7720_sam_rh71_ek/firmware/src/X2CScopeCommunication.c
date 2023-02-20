@@ -1,3 +1,8 @@
+/* MISRA C-2012 Rule 3.1 deviated:2 Deviation record ID -  H3_MISRAC_2012_R_3_1_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block deviate:2 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" 
+
 /*
  * Copyright (c) 2013, Linz Center of Mechatronics GmbH (LCM) http://www.lcm.at/
  * All rights reserved.
@@ -30,16 +35,23 @@
 /*
  * This file is part of X2C. http://www.mechatronic-simulation.org/
  */
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
+
 #include "X2CScopeCommunication.h"
-#include "device.h"
-#include "peripheral/flexcom/usart/plib_flexcom1_usart.h"
 
 void sendSerial(uint8_t data)
 {
-    FLEXCOM1_USART_Write(&data,1);
+    bool status;
+    status = FLEXCOM1_USART_Write(&data,1);
+     if( false == status )
+     {
+         /** ToDO: Log error */
+     }
 }
 
-uint8_t receiveSerial()
+uint8_t receiveSerial(void)
 {
     uint8_t data;
     bool status = false;
@@ -54,13 +66,17 @@ uint8_t receiveSerial()
     }
 }
 
-uint8_t isReceiveDataAvailable()
+uint8_t isReceiveDataAvailable(void)
 {
-    return (FLEXCOM1_USART_ReceiverIsReady());
+    bool status;
+    status = FLEXCOM1_USART_ReceiverIsReady();
+    return (uint8_t)(status);
 
 }
 
-uint8_t isSendReady()
+uint8_t isSendReady(void)
 {
-    return (FLEXCOM1_USART_TransmitterIsReady());
+    bool status;
+    status = FLEXCOM1_USART_TransmitterIsReady();
+    return (uint8_t)(status);
 }

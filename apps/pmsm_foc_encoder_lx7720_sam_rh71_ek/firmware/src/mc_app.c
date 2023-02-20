@@ -58,8 +58,8 @@
 /* Defines                                                                    */
 /******************************************************************************/
 /* Define the number of slow loop to wait before stopping the motor if there was no activity */
-#define MOTOR_ACTIVITY_SLOW_LOOP_COUNT_60_SEC  (12000)
-
+#define MOTOR_ACTIVITY_SLOW_LOOP_COUNT_60_SEC  (12000U)
+#define NOP() asm("NOP");
 /******************************************************************************/
 /* Local Function Prototype                                                   */
 /******************************************************************************/
@@ -81,35 +81,36 @@ __STATIC_INLINE void MCAPP_SpeedRamp(void);
 /*                   Structures                                               */
 /******************************************************************************/
 /*  Motor control algorithm control structure  */
-MCAPP_CONTROL_PARAM gCtrlParam;
-MCAPP_FOC_PARAM gfocParam;
-MCAPP_DATA gMCAPPData;
-MCAPP_POSITION_CALC gPositionCalc;
+static MCAPP_CONTROL_PARAM gCtrlParam;
+static MCAPP_FOC_PARAM gfocParam;
+static MCAPP_DATA gMCAPPData;
+static MCAPP_POSITION_CALC gPositionCalc;
 
 /******************************************************************************/
 /*                   Global Variables                                         */
 /******************************************************************************/
-float speed_ref_filtered = 0.0f;
-uint32_t phaseCurrentUOffset;
-uint32_t phaseCurrentVOffset;
+static float speed_ref_filtered = 0.0f;
+static uint32_t phaseCurrentUOffset;
+static uint32_t phaseCurrentVOffset;
 
 /* Global variables for Decimation Filters for channel U and V */
-volatile __attribute__ ((tcm)) MCAPP_SINC3 gCurrentU = {0};
-volatile __attribute__ ((tcm)) MCAPP_SINC3 gCurrentV = {0};
-volatile __attribute__ ((tcm)) uint32_t sinc3_count = 0;
-volatile __attribute__ ((tcm)) uint32_t currentUActive = 0;
-volatile __attribute__ ((tcm)) uint32_t currentVActive = 0;
-volatile uint32_t sinc3_out_sample_count = 0;
+static volatile __attribute__ ((tcm)) MCAPP_SINC3 gCurrentU = {0};
+static volatile __attribute__ ((tcm)) MCAPP_SINC3 gCurrentV = {0};
+static volatile __attribute__ ((tcm)) uint32_t sinc3_count = 0;
+static volatile __attribute__ ((tcm)) uint32_t currentUActive = 0;
+static volatile __attribute__ ((tcm)) uint32_t currentVActive = 0;
+static volatile uint32_t sinc3_out_sample_count = 0U;
 
 /* Encoder last measure of speed in electrical rad per sec */
-volatile float speed_elec_rad_per_sec;
+static volatile float speed_elec_rad_per_sec;
 
 /* Motor speed target in electrical rad per sec */
-float motor_speed_target_elec_rad_per_sec = 400;
+static float motor_speed_target_elec_rad_per_sec = 400.0f;
 
 /* Count of slow loop since last user activity */
-uint32_t motor_activity_count = 0;
+static uint32_t motor_activity_count = 0U;
 
+static uintptr_t dummyforMisra;
 /*****************ISR Functions *******************************/
 
 /******************************************************************************/
@@ -137,12 +138,12 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
             gCtrlParam.changeMode = false;
 
             /* IqRef & IdRef not used */
-            gCtrlParam.iqRef = 0;
-            gCtrlParam.idRef = 0;
+            gCtrlParam.iqRef = 0.0f;
+            gCtrlParam.idRef = 0.0f;
 
             /* re-init vars for initial speed ramp */
-            gCtrlParam.startup_lock_count = 0;
-            gCtrlParam.startup_angle_ramp_rads_per_sec = 0;
+            gCtrlParam.startup_lock_count = 0U;
+            gCtrlParam.startup_angle_ramp_rads_per_sec = 0.0f;
         }
 
         /* q current reference is equal to the velocity reference
@@ -150,7 +151,7 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
          * for maximum startup torque, set the q current to maximum acceptable
          * value represents the maximum peak value 	 */
 
-        gCtrlParam.iqRef = Q_CURRENT_REF_OPENLOOP*gCtrlParam.direction;
+        gCtrlParam.iqRef = Q_CURRENT_REF_OPENLOOP*(float)gCtrlParam.direction;
 
         /* PI control for Iq torque control loop */
         gPIParmQ.inMeas = gMCLIBCurrentDQ.iq;
@@ -172,13 +173,13 @@ __STATIC_INLINE void MCAPP_MotorCurrentControl( void )
             /* Just switched from open loop to close loop */
             gCtrlParam.changeMode = false;
             /* Load velocity control loop with Iq reference for smooth transition */
-            gPIParmQref.dSum = 0.0;
-            gPIParmD.inRef = 0.0;
-            gCtrlParam.idRef = 0.0;
-            gCtrlParam.sync_cnt = 0;
+            gPIParmQref.dSum = 0.0f;
+            gPIParmD.inRef = 0.0f;
+            gCtrlParam.idRef = 0.0f;
+            gCtrlParam.sync_cnt = 0U;
 
             // Set default target speed rad/sec
-            motor_speed_target_elec_rad_per_sec = 400;
+            motor_speed_target_elec_rad_per_sec = 400.0f;
         }
 
 #if(TORQUE_MODE == true)
@@ -216,17 +217,17 @@ __STATIC_INLINE void MCAPP_MotorAngleCalc(void)
     if(gCtrlParam.openLoop == true)
     {
         /* begin with the lock sequence, for field alignment */
-        if (gCtrlParam.startup_lock_count < LOCK_COUNT_FOR_LOCK_TIME)
+        if (gCtrlParam.startup_lock_count < (uint32_t)LOCK_COUNT_FOR_LOCK_TIME)
         {
             gCtrlParam.startup_lock_count++;
-            gPositionCalc.rotor_angle_rad_per_sec = (M_PI);
+            gPositionCalc.rotor_angle_rad_per_sec = (float)(M_PI);
         }
         else
         {
-            if(gCtrlParam.startup_lock_count < 2*LOCK_COUNT_FOR_LOCK_TIME)
+            if(gCtrlParam.startup_lock_count < 2U*(uint32_t)LOCK_COUNT_FOR_LOCK_TIME)
             {
                 gCtrlParam.startup_lock_count++;
-                gPositionCalc.rotor_angle_rad_per_sec = (M_PI + (M_PI_2 * gCtrlParam.direction));
+                gPositionCalc.rotor_angle_rad_per_sec = ((float)M_PI + ((float)M_PI_2 * (float)gCtrlParam.direction));
             }
             else
             {
@@ -243,38 +244,40 @@ __STATIC_INLINE void MCAPP_MotorAngleCalc(void)
                 gPositionCalc.posCompensation = 0u;
                 speed_ref_filtered=0.0f;
                 /* the angle set after alignment */
-                gPositionCalc.rotor_angle_rad_per_sec = 0;
-                gCtrlParam.open_loop_stab_counter = 0;
+                gPositionCalc.rotor_angle_rad_per_sec = 0.0f;
+                gCtrlParam.open_loop_stab_counter = 0U;
             }
         }
     }
     else
     {
         /* Switched to closed loop..*/
-        gPositionCalc.QDECcnt = (TC1_REGS->TC_CHANNEL[0].TC_CV)& 0xFFFFu;        
+        gPositionCalc.QDECcnt = (uint16_t)((TC1_REGS->TC_CHANNEL[0].TC_CV)& 0xFFFFu);        
         if((gPositionCalc.QDECcnt>QDEC_UPPER_THRESHOLD) && (gPositionCalc.QDECcntZ<QDEC_LOWER_THRESHOLD))
         {
             gPositionCalc.posCompensation += QDEC_UNDERFLOW;
         } else if((gPositionCalc.QDECcntZ>QDEC_UPPER_THRESHOLD) && (gPositionCalc.QDECcnt<QDEC_LOWER_THRESHOLD))
         {
             gPositionCalc.posCompensation += QDEC_OVERFLOW;           
-        } else{ }        
+        } else{ 
+            /* No Operation*/
+        }        
         
         gPositionCalc.posCompensation = gPositionCalc.posCompensation % ENCODER_PULSES_PER_EREV;
-        gPositionCalc.posCntTmp = gPositionCalc.QDECcnt + gPositionCalc.posCompensation;  
-        gPositionCalc.posCnt = gPositionCalc.posCntTmp % ENCODER_PULSES_PER_EREV;
-        gPositionCalc.rotor_angle_rad_per_sec = ((float)gPositionCalc.posCnt) * (2.0 * M_PI / ENCODER_PULSES_PER_EREV);
+        gPositionCalc.posCntTmp = (uint32_t)((uint32_t)gPositionCalc.QDECcnt + (uint32_t)gPositionCalc.posCompensation);  
+        gPositionCalc.posCnt =(uint16_t) (gPositionCalc.posCntTmp % ENCODER_PULSES_PER_EREV);
+        gPositionCalc.rotor_angle_rad_per_sec = ((float)gPositionCalc.posCnt) * (2.0f * (float)M_PI / (float)ENCODER_PULSES_PER_EREV);
         gPositionCalc.QDECcntZ = gPositionCalc.QDECcnt;
     }
 
     /* Limit rotor angle range to 0 to 2*M_PI for lookup table */
-    if(gPositionCalc.rotor_angle_rad_per_sec > (2*M_PI))
+    if(gPositionCalc.rotor_angle_rad_per_sec > (2.0f*(float)M_PI))
     {
-      gfocParam.angle = gPositionCalc.rotor_angle_rad_per_sec - (2*M_PI);
+      gfocParam.angle = gPositionCalc.rotor_angle_rad_per_sec - (2.0f*(float)M_PI);
     }
-    else if(gPositionCalc.rotor_angle_rad_per_sec < 0)
+    else if(gPositionCalc.rotor_angle_rad_per_sec < 2.0f)
     {
-      gfocParam.angle = 2*M_PI + gPositionCalc.rotor_angle_rad_per_sec;
+      gfocParam.angle = 2.0f*(float)M_PI + gPositionCalc.rotor_angle_rad_per_sec;
     }
     else
     {
@@ -292,17 +295,17 @@ __STATIC_INLINE void MCAPP_MotorAngleCalc(void)
 
 static void MCAPP_ADCOffsetCalibration(void)
 {
-    uint32_t AdcSampleCounter = 0;
-    uint32_t phaseUOffsetBuffer = 0;
-    uint32_t phaseVOffsetBuffer = 0;
+    uint32_t AdcSampleCounter = 0u;
+    uint32_t phaseUOffsetBuffer = 0u;
+    uint32_t phaseVOffsetBuffer = 0u;
 
-    for(AdcSampleCounter = 0; AdcSampleCounter < CURRENTS_OFFSET_SAMPLES; AdcSampleCounter++)
+    for(AdcSampleCounter = 0u; AdcSampleCounter < CURRENTS_OFFSET_SAMPLES; AdcSampleCounter++)
     {
         /* Wait next sample */
         uint32_t sample = sinc3_out_sample_count;
         do
         {
-            asm("NOP");
+            NOP();
         } while (sinc3_out_sample_count == sample);
 
         phaseUOffsetBuffer += gCurrentU.sinc3_out;
@@ -321,6 +324,10 @@ static void MCAPP_ADCOffsetCalibration(void)
     {
         phaseCurrentUOffset = CURRENT_OFFSET_MIN;
     }
+    else
+    {
+        /* No Operation*/
+    }
 
     /* Limit motor phase B current offset calibration to configured Min/Max levels. */
     if(phaseCurrentVOffset >  CURRENT_OFFSET_MAX)
@@ -330,6 +337,10 @@ static void MCAPP_ADCOffsetCalibration(void)
     else if(phaseCurrentVOffset <  CURRENT_OFFSET_MIN)
     {
         phaseCurrentVOffset = CURRENT_OFFSET_MIN;
+    }
+    else
+    {
+        /* No Operation*/
     }
 }
 
@@ -341,8 +352,8 @@ static void MCAPP_ADCOffsetCalibration(void)
 /******************************************************************************/
 void MCAPP_PIOutputInit( MCLIB_PI *pParm)
 {
-    pParm->dSum = 0;
-    pParm->out = 0;
+    pParm->dSum = 0.0f;
+    pParm->out = 0.0f;
 }
 
 /******************************************************************************/
@@ -397,22 +408,22 @@ static void MCAPP_MotorControlParamInit(void)
     gCtrlParam.openLoop
             = true;
     gCtrlParam.changeMode = false;
-    gCtrlParam.startup_lock_count = 0;
-    gCtrlParam.open_loop_stab_counter = 0;
-	gCtrlParam.startup_angle_ramp_rads_per_sec = 0;
-    gMCLIBPosition.angle = 0;
+    gCtrlParam.startup_lock_count = 0U;
+    gCtrlParam.open_loop_stab_counter = 0U;
+	gCtrlParam.startup_angle_ramp_rads_per_sec = 0.0f;
+    gMCLIBPosition.angle = 0.0f;
     gMCLIBSVPWM.period = MAX_DUTY;
     gCtrlParam.motorStatus = MOTOR_STATUS_STOPPED;
-    gMCLIBCurrentDQ.id = 0;
-    gMCLIBCurrentDQ.iq = 0;
+    gMCLIBCurrentDQ.id = 0.0f;
+    gMCLIBCurrentDQ.iq = 0.0f;
     gCtrlParam.rampIncStep = SPEED_RAMP_INC_SLOW_LOOP;
-    gCtrlParam.velRef = 0.0;
+    gCtrlParam.velRef = 0.0f;
     MCAPP_PIOutputInit(&gPIParmD);
     MCAPP_PIOutputInit(&gPIParmQ);
     MCAPP_PIOutputInit(&gPIParmQref);
 
-    gPositionCalc.rotor_angle_rad_per_sec = 0;
-    gPositionCalc.elec_rotation_count = 0;
+    gPositionCalc.rotor_angle_rad_per_sec = 0.0f;
+    gPositionCalc.elec_rotation_count = 0U;
     gPositionCalc.prev_position_count = 0;
     gPositionCalc.present_position_count = 0;
     speed_ref_filtered = 0.0f;
@@ -426,10 +437,10 @@ static void MCAPP_MotorControlParamInit(void)
 /******************************************************************************/
 __STATIC_INLINE bool MCAPP_SlowLoopTimeIsFinished(void)
 {
-    uint8_t retval = false;
+    bool retval = false;
     if(SLOW_LOOP_TIME_PWM_COUNT <= gCtrlParam.sync_cnt)
     {
-        gCtrlParam.sync_cnt = 0;
+        gCtrlParam.sync_cnt = 0U;
         retval = true;
     }
     return( retval );
@@ -468,9 +479,9 @@ __STATIC_INLINE void MCAPP_SpeedRamp(void)
 /******************************************************************************/
 __STATIC_INLINE void MCAPP_PWMDutyUpdate(uint32_t duty_PhU, uint32_t duty_PhV, uint32_t duty_PhW)
 {
-    PWM0_ChannelDutySet(PWM_CHANNEL_0, duty_PhU);
-    PWM0_ChannelDutySet(PWM_CHANNEL_1, duty_PhV);
-    PWM0_ChannelDutySet(PWM_CHANNEL_2, duty_PhW);
+    PWM0_ChannelDutySet(PWM_CHANNEL_0, (uint16_t)duty_PhU);
+    PWM0_ChannelDutySet(PWM_CHANNEL_1, (uint16_t)duty_PhV);
+    PWM0_ChannelDutySet(PWM_CHANNEL_2, (uint16_t)duty_PhW);
 }
 
 /******************************************************************************/
@@ -487,13 +498,22 @@ void MCAPP_ControlLoopISR(TC_COMPARE_STATUS status, uintptr_t context)
 {    
     float phaseCurrentU;
     float phaseCurrentV;
+    uint32_t temp;
     X2CScope_Update();
     /* PB17 GPIO is used for timing measurement. - Set High*/
-    PIOB_REGS->PIO_SODR = 1 << (17 & 0x1F);
+    PIOB_REGS->PIO_SODR = (uint32_t)((uint32_t)1U << (17U & 0x1FU));
 
  	/* Weight average on 4 last samples */
-    phaseCurrentU = ((2*gCurrentU.sinc3_out) + (4*gCurrentU.sinc3_out_p) + (3*gCurrentU.sinc3_out_pp) + gCurrentU.sinc3_out_ppp) / 10.0;
-    phaseCurrentV = ((2*gCurrentV.sinc3_out) + (4*gCurrentV.sinc3_out_p) + (3*gCurrentV.sinc3_out_pp) + gCurrentV.sinc3_out_ppp) / 10.0;
+    temp=2U*gCurrentU.sinc3_out;
+    temp+=4U*gCurrentU.sinc3_out_p;
+    temp+=3U*gCurrentU.sinc3_out_pp;
+    temp+=gCurrentU.sinc3_out_ppp;
+    phaseCurrentU = ((float)temp / 10.0f);
+    temp=2U*gCurrentV.sinc3_out;
+    temp+=4U*gCurrentV.sinc3_out_p;
+    temp+=3U*gCurrentV.sinc3_out_pp;
+    temp+=gCurrentV.sinc3_out_ppp;
+    phaseCurrentV = ((float)temp / 10.0f);
 
     /* Remove the offset from measured motor currents */
     phaseCurrentU = phaseCurrentU - (float)(phaseCurrentUOffset);
@@ -532,7 +552,7 @@ void MCAPP_ControlLoopISR(TC_COMPARE_STATUS status, uintptr_t context)
     gCtrlParam.sync_cnt++;
 
     /* PB17 GPIO is used for timing measurement. - Set Low*/
-    PIOB_REGS->PIO_CODR = 1 << (17 & 0x1F);
+    PIOB_REGS->PIO_CODR = ((uint32_t)1U <<(17U & 0x1FU));
 }
 
 /******************************************************************************/
@@ -554,7 +574,7 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
     if(gCtrlParam.openLoop == false)
     {
         /* PB18 GPIO is used for timing measurement. - Set Low*/
-        PIOB_REGS->PIO_SODR = 1 << (18 & 0x1F);
+        PIOB_REGS->PIO_SODR = (uint32_t)((uint32_t)1U << (18U & 0x1FU));
         gCtrlParam.endSpeed = motor_speed_target_elec_rad_per_sec;
  
         /* Speed Ramp */
@@ -567,17 +587,17 @@ __STATIC_INLINE void MCAPP_SlowControlLoop(void)
            gPositionCalc.prev_position_count = gPositionCalc.present_position_count;
         }
         pos_count_diff = gPositionCalc.present_position_count - gPositionCalc.prev_position_count;
-        speed_elec_rad_per_sec = (pos_count_diff * 2*M_PI)/(ENCODER_PULSES_PER_EREV *SLOW_LOOP_TIME_SEC );
+        speed_elec_rad_per_sec = ((float)pos_count_diff * 2.0f*(float)M_PI)/((float)ENCODER_PULSES_PER_EREV *SLOW_LOOP_TIME_SEC );
         gPositionCalc.prev_position_count = gPositionCalc.present_position_count;
             
         /* Execute the velocity control loop */
         gPIParmQref.inMeas = speed_elec_rad_per_sec;
-        gPIParmQref.inRef  = gCtrlParam.velRef*gCtrlParam.direction;
+        gPIParmQref.inRef  = gCtrlParam.velRef*(float)gCtrlParam.direction;
         MCLIB_PIControl(&gPIParmQref);
         gCtrlParam.iqRef = gPIParmQref.out;
         gCtrlParam.oldStatus = gCtrlParam.motorStatus;
         /* PB18 GPIO is used for timing measurement. - Set Low*/
-        PIOB_REGS->PIO_CODR = 1 << (18 & 0x1F);
+        PIOB_REGS->PIO_CODR = (uint32_t)((uint32_t)1U << (18U & 0x1FU));
     }
 #endif	// End of #if(TORQUE_MODE == false)
 }
@@ -601,13 +621,16 @@ void MCAPP_MotorStart(void)
 
     // Skip first 10 samples
     uint32_t current_count = sinc3_out_sample_count;
-    while (sinc3_out_sample_count < (current_count+10) );
+    while (sinc3_out_sample_count < (current_count+10U) )
+    {
+        /*Skip first 10 samples*/
+    }
 
     MCAPP_ADCOffsetCalibration();
 
     //Enable peripheral control of the PWM low pins : PA4, PA5, PA6
-    PIOA_REGS->PIO_MSKR = 0x70;
-	PIOA_REGS->PIO_CFGR = 0x3;
+    PIOA_REGS->PIO_MSKR = 0x70U;
+	PIOA_REGS->PIO_CFGR = 0x3U;
     gCtrlParam.motorStatus = MOTOR_STATUS_RUNNING;
 
     /* Clear fault before start */
@@ -629,21 +652,21 @@ static uint32_t MCAPP_Median_filter(uint32_t a, uint32_t b, uint32_t c)
 {
     if (a>b)
     {
-        if (b>c)
-            return b;
-        else if (a>c)
-            return c;
-        else
-            return a;
+        if (b>c){
+            return b;}
+        else if (a>c){
+            return c;}
+        else{
+            return a;}
     }
     else
     {
-        if (a>c)
-            return a;
-        else if (b>c)
-            return c;
-        else
-            return b;
+        if (a>c){
+            return a;}
+        else if (b>c){
+            return c;}
+        else{
+            return b;}
     }
 }
 
@@ -656,8 +679,9 @@ static uint32_t MCAPP_Median_filter(uint32_t a, uint32_t b, uint32_t c)
 /******************************************************************************/
 void __attribute__ ((tcm)) MCAPP_CurrentSNSCountISR(TC_TIMER_STATUS status, uintptr_t context)
 {
+    uint32_t temp1, temp2, temp3;
     /* PB28 GPIO is used for timing measurement. - Set High*/    
-    PIOB_REGS->PIO_SODR = 1 << (28 & 0x1F);
+    PIOB_REGS->PIO_SODR =(uint32_t)((uint32_t)1U << (28U & 0x1FU));
 
     currentUActive = TC3_REGS->TC_CHANNEL[0].TC_CV;
     currentVActive = TC3_REGS->TC_CHANNEL[1].TC_CV;
@@ -671,43 +695,48 @@ void __attribute__ ((tcm)) MCAPP_CurrentSNSCountISR(TC_TIMER_STATUS status, uint
     gCurrentV.s1_out_p = gCurrentV.sinc1_out;
     
     //Calculate delta for channel U
-    gCurrentU.sinc1_out = currentUActive - gCurrentU.sinc1_prevq;
-    gCurrentU.sinc1_prevq = currentUActive;
+    temp3 = currentUActive;
+    gCurrentU.sinc1_out = temp3 - gCurrentU.sinc1_prevq;
+    gCurrentU.sinc1_prevq = temp3;
 
     // Limit sinc1_out value in case of counter error
-    if (gCurrentU.sinc1_out > 200)
+    if (gCurrentU.sinc1_out > 200U)
     {
-        gCurrentU.sinc1_out = 100;
+        gCurrentU.sinc1_out = 100U;
     }
-
-    gCurrentU.intg3 = (gCurrentU.intg3 + gCurrentU.intg2);
-    gCurrentU.intg2 = (gCurrentU.intg2 + gCurrentU.intg1);
-    gCurrentU.intg1 = (gCurrentU.intg1 + gCurrentU.sinc1_out);
+    temp2 =gCurrentU.intg2;
+    gCurrentU.intg3 = (gCurrentU.intg3 + temp2);
+    gCurrentU.intg2 = (temp2 + gCurrentU.intg1);
+    temp1=gCurrentU.sinc1_out;
+    gCurrentU.intg1 = (gCurrentU.intg1 + temp1);
     
+    temp2=gCurrentU.s1_out_pp;
     // Calculate median for channel U
-    gCurrentU.sinc1_out = MCAPP_Median_filter(gCurrentU.sinc1_out, gCurrentU.s1_out_pp, gCurrentU.s1_out_p);
+    gCurrentU.sinc1_out = MCAPP_Median_filter(temp1, temp2, gCurrentU.s1_out_p);
     
     //Calculate delta for channel V
-    gCurrentV.sinc1_out = currentVActive - gCurrentV.sinc1_prevq;
+    temp3 = currentVActive;
+    gCurrentV.sinc1_out = temp3 - gCurrentV.sinc1_prevq;
     gCurrentV.sinc1_prevq = currentVActive;
     
     // Limit sinc1_out value in case of counter error
-    if (gCurrentU.sinc1_out > 200)
+    if (gCurrentU.sinc1_out > 200U)
     {
-        gCurrentU.sinc1_out = 100;
+        gCurrentU.sinc1_out = 100U;
     }
-
-    gCurrentV.intg3 = (gCurrentV.intg3 + gCurrentV.intg2);
-    gCurrentV.intg2 = (gCurrentV.intg2 + gCurrentV.intg1);
-    gCurrentV.intg1 = (gCurrentV.intg1 + gCurrentV.sinc1_out);
-    
+    temp2=gCurrentV.intg2;
+    gCurrentV.intg3 = (gCurrentV.intg3 + temp2);
+    gCurrentV.intg2 = (temp2 + gCurrentV.intg1);
+    temp1=gCurrentV.sinc1_out;
+    gCurrentV.intg1 = (gCurrentV.intg1 + temp1);
+    temp2=gCurrentV.s1_out_pp;
     // Calculate median for channel V
-    gCurrentV.sinc1_out = MCAPP_Median_filter(gCurrentV.sinc1_out, gCurrentV.s1_out_pp, gCurrentV.s1_out_p);
+    gCurrentV.sinc1_out = MCAPP_Median_filter(temp1, temp2, gCurrentV.s1_out_p);
    
     sinc3_count++;
-    if (sinc3_count >= 5)
+    if (sinc3_count >= 5U)
     {
-        sinc3_count = 0;
+        sinc3_count = 0U;
         
         //Average 3 sample delay line - channel U
         gCurrentU.sinc3_out_ppp = gCurrentU.sinc3_out_pp;
@@ -719,22 +748,27 @@ void __attribute__ ((tcm)) MCAPP_CurrentSNSCountISR(TC_TIMER_STATUS status, uint
         gCurrentV.sinc3_out_pp = gCurrentV.sinc3_out_p;
         gCurrentV.sinc3_out_p = gCurrentV.sinc3_out;
 
-
-        gCurrentU.sinc3_out = (gCurrentU.intg3 - gCurrentU.der1 - gCurrentU.der2 - gCurrentU.der3);
-        gCurrentU.der3 = (gCurrentU.intg3 - gCurrentU.der1 - gCurrentU.der2);
-        gCurrentU.der2 = (gCurrentU.intg3 - gCurrentU.der1);
-        gCurrentU.der1 = (gCurrentU.intg3);
+        temp3=gCurrentU.intg3;
+        temp2=gCurrentU.der2;
+        temp1=gCurrentU.der1;
+        gCurrentU.sinc3_out = (temp3 - temp1 - temp2 - gCurrentU.der3);
+        gCurrentU.der3 = (temp3 - temp1 - temp2);
+        gCurrentU.der2 = (temp3 - temp1);
+        gCurrentU.der1 = (temp3);
         
-        gCurrentV.sinc3_out = (gCurrentV.intg3 - gCurrentV.der1 - gCurrentV.der2 - gCurrentV.der3);
-        gCurrentV.der3 = (gCurrentV.intg3 - gCurrentV.der1 - gCurrentV.der2);
-        gCurrentV.der2 = (gCurrentV.intg3 - gCurrentV.der1);
-        gCurrentV.der1 = (gCurrentV.intg3);
+        temp3=gCurrentV.intg3;
+        temp2=gCurrentV.der2;
+        temp1=gCurrentV.der1;
+        gCurrentV.sinc3_out = (temp3 - temp1 - temp2 - gCurrentV.der3);
+        gCurrentV.der3 = (temp3 - temp1 - temp2);
+        gCurrentV.der2 = (temp3 - temp1);
+        gCurrentV.der1 = (temp3);
         
         sinc3_out_sample_count++;
     }
 
     /* PA28 GPIO is used for timing measurement. - Set Low*/
-    PIOB_REGS->PIO_CODR = 1 << (28 & 0x1F);
+    PIOB_REGS->PIO_CODR = (uint32_t)((uint32_t)1U << (28U & 0x1FU));
 }
 
 /******************************************************************************/
@@ -746,11 +780,11 @@ void __attribute__ ((tcm)) MCAPP_CurrentSNSCountISR(TC_TIMER_STATUS status, uint
 void MCAPP_MotorStop(void)
 {
     //Disable peripheral control of the PWM low pins : PA4, PA5, PA6
-    PIOA_REGS->PIO_MSKR = 0x70;
-    PIOA_REGS->PIO_CFGR = 0x0;
+    PIOA_REGS->PIO_MSKR = 0x70U;
+    PIOA_REGS->PIO_CFGR = 0x0U;
 
     /* Disables PWM channels. */
-    PWM0_ChannelsStop(PWM_CHANNEL_0_MASK | PWM_CHANNEL_1_MASK | PWM_CHANNEL_2_MASK);
+    PWM0_ChannelsStop((PWM_CHANNEL_MASK)((uint8_t)PWM_CHANNEL_0_MASK | (uint8_t)PWM_CHANNEL_1_MASK | (uint8_t)PWM_CHANNEL_2_MASK));
 	
 	/* Reset algorithm specific variables for next iteration.*/
 	MCAPP_MotorControlParamInit();
@@ -763,12 +797,12 @@ void MCAPP_MotorStop(void)
     gPIParmQref.inMeas = 0.0f;
     gPIParmQref.inRef = 0.0f;
     gPIParmQref.dSum = 0.0f;
-    gCtrlParam.endSpeed = 0;
-	gCtrlParam.velRef = 0;
+    gCtrlParam.endSpeed = 0.0f;
+	gCtrlParam.velRef = 0.0f;
 	gCtrlParam.motorStatus = MOTOR_STATUS_STOPPED;
     gCtrlParam.oldStatus = MOTOR_STATUS_STOPPED;
     gMCAPPData.mcState = MC_APP_STATE_STOP;
-    speed_ref_filtered = 0;
+    speed_ref_filtered = 0.0f;
 }
 
 /******************************************************************************/
@@ -807,23 +841,23 @@ static void MCAPP_LedDirectionUpdate(bool ledOn)
 /******************************************************************************/
 static void MCAPP_SwitchStartDebounce(MC_APP_STATE state)
 {
-    if (!SWITCH_START_Get())
+    if (!(bool)SWITCH_START_Get())
     {
         gMCAPPData.switchStartCount++;
-        if (gMCAPPData.switchStartCount >= 0xFF)            
+        if (gMCAPPData.switchStartCount >= 0xFFU)            
         {
-           gMCAPPData.switchStartCount = 0;
+           gMCAPPData.switchStartCount = 0U;
            gMCAPPData.switchStartState = MC_APP_SWITCH_PRESSED;
         }           
     }
     if (gMCAPPData.switchStartState == MC_APP_SWITCH_PRESSED)
     {
-        if (SWITCH_START_Get())
+        if ((bool)SWITCH_START_Get())
         {
-            gMCAPPData.switchStartCount = 0;
+            gMCAPPData.switchStartCount = 0U;
             gMCAPPData.switchStartState = MC_APP_SWITCH_RELEASED;
             gMCAPPData.mcState = state;
-            motor_activity_count = 0;
+            motor_activity_count = 0U;
             LED3_Clear();
         }
     }
@@ -837,13 +871,13 @@ static void MCAPP_SwitchStartDebounce(MC_APP_STATE state)
 /******************************************************************************/
 static void MCAPP_SpeedIncrease(void)
 {
-    if (motor_speed_target_elec_rad_per_sec < 800)
+    if (motor_speed_target_elec_rad_per_sec < 800.0f)
     {
-        motor_speed_target_elec_rad_per_sec += 100;
+        motor_speed_target_elec_rad_per_sec += 100.0f;
     }
     else
     {
-        motor_speed_target_elec_rad_per_sec = 800;
+        motor_speed_target_elec_rad_per_sec = 800.0f;
     }
 }
 
@@ -855,13 +889,13 @@ static void MCAPP_SpeedIncrease(void)
 /******************************************************************************/
 static void MCAPP_SpeedDecrease(void)
 {
-    if (motor_speed_target_elec_rad_per_sec > 100)
+    if (motor_speed_target_elec_rad_per_sec > 100.0f)
     {
-        motor_speed_target_elec_rad_per_sec -= 100;
+        motor_speed_target_elec_rad_per_sec -= 100.0f;
     }
     else
     {
-        motor_speed_target_elec_rad_per_sec = 100;
+        motor_speed_target_elec_rad_per_sec = 100.0f;
     }
 }
 
@@ -873,23 +907,23 @@ static void MCAPP_SpeedDecrease(void)
 /******************************************************************************/
 static void MCAPP_SwitchIncrDebounce(void)
 {
-    if (!SWITCH_INCR_Get())
+    if (!(bool)SWITCH_INCR_Get())
     {
         gMCAPPData.switchIncrCount++;
-        if (gMCAPPData.switchIncrCount >= 0xFF)            
+        if (gMCAPPData.switchIncrCount >= 0xFFU)            
         {
-           gMCAPPData.switchIncrCount = 0;
+           gMCAPPData.switchIncrCount = 0U;
            gMCAPPData.switchIncrState = MC_APP_SWITCH_PRESSED;
         }           
     }
     if (gMCAPPData.switchIncrState == MC_APP_SWITCH_PRESSED)
     {
-        if (SWITCH_INCR_Get())
+        if ((bool)SWITCH_INCR_Get())
         {
-            gMCAPPData.switchIncrCount = 0;
+            gMCAPPData.switchIncrCount = 0U;
             gMCAPPData.switchIncrState = MC_APP_SWITCH_RELEASED;
             MCAPP_SpeedIncrease();
-            motor_activity_count = 0;
+            motor_activity_count = 0U;
             LED3_Clear();
         }
     }
@@ -903,23 +937,23 @@ static void MCAPP_SwitchIncrDebounce(void)
 /******************************************************************************/
 static void MCAPP_SwitchDecrDebounce(void)
 {
-    if (!SWITCH_DECR_Get())
+    if (!(bool)SWITCH_DECR_Get())
     {
         gMCAPPData.switchDecrCount++;
-        if (gMCAPPData.switchDecrCount >= 0xFF)            
+        if (gMCAPPData.switchDecrCount >= 0xFFU)            
         {
-           gMCAPPData.switchDecrCount = 0;
+           gMCAPPData.switchDecrCount = 0U;
            gMCAPPData.switchDecrState = MC_APP_SWITCH_PRESSED;
         }           
     }
     if (gMCAPPData.switchDecrState == MC_APP_SWITCH_PRESSED)
     {
-        if (SWITCH_DECR_Get())
+        if ((bool)SWITCH_DECR_Get())
         {
-            gMCAPPData.switchDecrCount = 0;
+            gMCAPPData.switchDecrCount = 0U;
             gMCAPPData.switchDecrState = MC_APP_SWITCH_RELEASED;
             MCAPP_SpeedDecrease();
-            motor_activity_count = 0;
+            motor_activity_count = 0U;
             LED3_Clear();
         }
     }
@@ -933,20 +967,20 @@ static void MCAPP_SwitchDecrDebounce(void)
 /******************************************************************************/
 static void MCAPP_SwitchResetDebounce(void)
 {
-    if (!SWITCH_RESET_Get())
+    if (!(bool)SWITCH_RESET_Get())
     {
         gMCAPPData.switchResetCount++;
-        if (gMCAPPData.switchResetCount >= 0xFF)            
+        if (gMCAPPData.switchResetCount >= 0xFFU)            
         {
-           gMCAPPData.switchResetCount = 0;
+           gMCAPPData.switchResetCount = 0U;
            gMCAPPData.switchResetState = MC_APP_SWITCH_PRESSED;
         }           
     }
     if (gMCAPPData.switchResetState == MC_APP_SWITCH_PRESSED)
     {
-        if (SWITCH_RESET_Get())
+        if ((bool)SWITCH_RESET_Get())
         {
-            gMCAPPData.switchResetCount = 0;
+            gMCAPPData.switchResetCount = 0U;
             gMCAPPData.switchResetState = MC_APP_SWITCH_RELEASED;
             
             /* Perform reset action : To be implemented, temporary toggle LED2 */
@@ -963,20 +997,20 @@ static void MCAPP_SwitchResetDebounce(void)
 /******************************************************************************/
 static void MCAPP_SwitchDirectionDebounce(void)
 {
-    if (!SWITCH_DIRECTION_Get())
+    if (!(bool)SWITCH_DIRECTION_Get())
     {
         gMCAPPData.switchDirectionCount++;
-        if (gMCAPPData.switchDirectionCount >= 0xFF)            
+        if (gMCAPPData.switchDirectionCount >= 0xFFU)            
         {
-           gMCAPPData.switchDirectionCount = 0;
+           gMCAPPData.switchDirectionCount = 0U;
            gMCAPPData.switchDirectionState = MC_APP_SWITCH_PRESSED;
         }           
     }
     if (gMCAPPData.switchDirectionState == MC_APP_SWITCH_PRESSED)
     {
-        if (SWITCH_DIRECTION_Get())
+        if ((bool)SWITCH_DIRECTION_Get())
         {
-            gMCAPPData.switchDirectionCount = 0;
+            gMCAPPData.switchDirectionCount = 0U;
             gMCAPPData.switchDirectionState = MC_APP_SWITCH_RELEASED;
  
             if (gMCAPPData.mcState == MC_APP_STATE_WAIT_START)
@@ -1003,7 +1037,7 @@ static void MCAPP_SwitchDirectionDebounce(void)
 /* Function return: None                                                      */
 /* Description: Motor application state machine                               */
 /******************************************************************************/
-void MCAPP_Tasks()
+void MCAPP_Tasks(void)
 {
   switch (gMCAPPData.mcState)
   {
@@ -1011,15 +1045,15 @@ void MCAPP_Tasks()
                       /* Set field alignment flag */
             gCtrlParam.fieldAlignmentFlag = 1U;
           //Disable peripheral control of the PWM low pins : PA4, PA5, PA6
-          PIOA_REGS->PIO_MSKR = 0x70;
-          PIOA_REGS->PIO_CFGR = 0x0;
+          PIOA_REGS->PIO_MSKR = 0x70U;
+          PIOA_REGS->PIO_CFGR = 0x0U;
 
           /* Start TC0 to trigger periodic PWM duty update */
           NVIC_DisableIRQ(TC0_CH0_IRQn);
           NVIC_ClearPendingIRQ(TC0_CH0_IRQn);
-          NVIC_SetPriority(TC0_CH0_IRQn, 1);
+          NVIC_SetPriority(TC0_CH0_IRQn, 1U);
           NVIC_EnableIRQ(TC0_CH0_IRQn);
-          TC0_CH0_CompareCallbackRegister(MCAPP_ControlLoopISR, (uintptr_t)NULL);
+          TC0_CH0_CompareCallbackRegister(MCAPP_ControlLoopISR, (uintptr_t)dummyforMisra);
           TC0_REGS->TC_CHANNEL[0].TC_EMR |= TC_EMR_TRIGSRCB(TC_EMR_TRIGSRCB_PWMx_Val);
           TC0_REGS->TC_CHANNEL[0].TC_CCR = (TC_CCR_CLKEN_Msk);
           TC0_CH0_CompareStart();
@@ -1028,8 +1062,8 @@ void MCAPP_Tasks()
            the counter only when LX7720 SNS signal are at level logic one */
           NVIC_DisableIRQ(TC1_CH0_IRQn);
           NVIC_ClearPendingIRQ(TC1_CH0_IRQn);
-          NVIC_SetPriority(TC1_CH0_IRQn, 0);
-          TC0_CH1_TimerCallbackRegister(MCAPP_CurrentSNSCountISR, (uintptr_t)NULL);
+          NVIC_SetPriority(TC1_CH0_IRQn, 0U);
+          TC0_CH1_TimerCallbackRegister(MCAPP_CurrentSNSCountISR, (uintptr_t)dummyforMisra);
           NVIC_EnableIRQ(TC1_CH0_IRQn);
           TC3_REGS->TC_CHANNEL[0].TC_CMR |= TC_CMR_BURST_XC0;
           TC3_REGS->TC_CHANNEL[1].TC_CMR |= TC_CMR_BURST_XC1;
@@ -1049,7 +1083,7 @@ void MCAPP_Tasks()
           LED0_Set();
           MCAPP_LedDirectionUpdate(true);
           MCAPP_MotorStart();
-          motor_activity_count = 0;
+          motor_activity_count = 0U;
           LED3_Clear();
 
           gMCAPPData.mcState = MC_APP_STATE_RUNNING;  
@@ -1062,13 +1096,16 @@ void MCAPP_Tasks()
             motor_activity_count++;
           }
 
-          if (motor_activity_count > ( 5 * MOTOR_ACTIVITY_SLOW_LOOP_COUNT_60_SEC) ) // 5 minutes
+          if (motor_activity_count > ( 5U * MOTOR_ACTIVITY_SLOW_LOOP_COUNT_60_SEC) ) // 5 minutes
           {
               gMCAPPData.mcState = MC_APP_STATE_STOP_DECREASE;
           }
-          else if (motor_activity_count > ( 4 * MOTOR_ACTIVITY_SLOW_LOOP_COUNT_60_SEC) ) // > 4 minutes
+          else if (motor_activity_count > ( 4U * MOTOR_ACTIVITY_SLOW_LOOP_COUNT_60_SEC) ) // > 4 minutes
           {
               LED3_Set();
+          }
+          else{
+              /* Dummy branch for MISRAC compliance*/
           }
 
           MCAPP_SwitchStartDebounce(MC_APP_STATE_STOP_DECREASE);
@@ -1081,7 +1118,7 @@ void MCAPP_Tasks()
 
         case MC_APP_STATE_STOP_DECREASE:
 
-            if (speed_elec_rad_per_sec*gCtrlParam.direction <= 110)
+            if (speed_elec_rad_per_sec*(float)gCtrlParam.direction <= 110.0f)
             {
                 gMCAPPData.mcState = MC_APP_STATE_STOP;
 
@@ -1092,7 +1129,7 @@ void MCAPP_Tasks()
                 {
                     MCAPP_SlowControlLoop();
                   
-                    if((speed_elec_rad_per_sec*gCtrlParam.direction) <= (motor_speed_target_elec_rad_per_sec + 10))
+                    if((speed_elec_rad_per_sec*(float)gCtrlParam.direction) <= (motor_speed_target_elec_rad_per_sec + 10.0f))
                     {
                        MCAPP_SpeedDecrease();
                     }
@@ -1109,6 +1146,7 @@ void MCAPP_Tasks()
         break;
 
       default:
+          /* Undefined state: Should never come here*/
           break;
   }
 }

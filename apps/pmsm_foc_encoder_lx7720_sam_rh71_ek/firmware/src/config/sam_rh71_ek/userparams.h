@@ -31,8 +31,8 @@
 *
 ***********************************************************************************************/
 
-#ifndef _USER_HEADER
-#define _USER_HEADER
+#ifndef USER_HEADER
+#define USER_HEADER
 
 /***********************************************************************************************/
 /*                    INCLUDE FILES                                                            */
@@ -115,18 +115,18 @@
 #define     SPEEDCNTR_OUTMAX           ((float)MAX_CURRENT)
 
 #elif(MOTOR == MOTOR_2_CUSTOM_MOTOR)
-///* PI controllers tuning values - */
+/* PI controllers tuning values - */
 /********* D Control Loop Coefficients ****************************************/
-#define     D_CURRCNTR_PTERM           (float)(0.035798/MAX_CURRENT)
-#define     D_CURRCNTR_ITERM           (float)(0.00022 /MAX_CURRENT)
-#define     D_CURRCNTR_CTERM           (float)(0.999/MAX_CURRENT)
+#define     D_CURRCNTR_PTERM           (float)(0.035798f/MAX_CURRENT)
+#define     D_CURRCNTR_ITERM           (float)(0.00022f /MAX_CURRENT)
+#define     D_CURRCNTR_CTERM           (float)(0.999f/MAX_CURRENT)
 #define     D_CURRCNTR_OUTMAX          (float)(0.999)
 
 /******** Q Control Loop Coefficients ****************************************/
-#define     Q_CURRCNTR_PTERM           (float)(0.035798/MAX_CURRENT)
-#define     Q_CURRCNTR_ITERM           (float)(0.00022 /MAX_CURRENT)
-#define     Q_CURRCNTR_CTERM           (float)(0.999/MAX_CURRENT)
-#define     Q_CURRCNTR_OUTMAX          (float)(0.999)
+#define     Q_CURRCNTR_PTERM           (float)(0.035798f/MAX_CURRENT)
+#define     Q_CURRCNTR_ITERM           (float)(0.00022f /MAX_CURRENT)
+#define     Q_CURRCNTR_CTERM           (float)(0.999f/MAX_CURRENT)
+#define     Q_CURRCNTR_OUTMAX          (float)(0.999f)
 
 /******* Velocity Control Loop Coefficients **********************************/
 #define     SPEEDCNTR_PTERM            (float) (0.05)
@@ -136,24 +136,24 @@
 
 #elif(MOTOR == MOTOR_3_HURST_DMA0204024B101)
 
-///* PI controllers tuning values - */
+/* PI controllers tuning values - */
 
 //******** D Control Loop Coefficients *******
-#define     D_CURRCNTR_PTERM                         (0.1)
-#define     D_CURRCNTR_ITERM                         (0.0005)
-#define     D_CURRCNTR_CTERM                         (0.5)
+#define     D_CURRCNTR_PTERM                         (0.1f)
+#define     D_CURRCNTR_ITERM                         (0.0005f)
+#define     D_CURRCNTR_CTERM                         (0.5f)
 #define     D_CURRCNTR_OUTMAX                        MAX_CURRENT
 
 //******** Q Control Loop Coefficients *******
-#define     Q_CURRCNTR_PTERM                         (0.1)
-#define     Q_CURRCNTR_ITERM                         (0.0005)
-#define     Q_CURRCNTR_CTERM                         (0.5)
+#define     Q_CURRCNTR_PTERM                         (0.1f)
+#define     Q_CURRCNTR_ITERM                         (0.0005f)
+#define     Q_CURRCNTR_CTERM                         (0.5f)
 #define     Q_CURRCNTR_OUTMAX                        MAX_CURRENT
 
 //*** Velocity Control Loop Coefficients *****
-#define     SPEEDCNTR_PTERM                            (0.01)
-#define     SPEEDCNTR_ITERM                            (0.00020)
-#define     SPEEDCNTR_CTERM                            0.5
+#define     SPEEDCNTR_PTERM                            (0.01f)
+#define     SPEEDCNTR_ITERM                            (0.00020f)
+#define     SPEEDCNTR_CTERM                            0.5f
 #define     SPEEDCNTR_OUTMAX                           MAX_CURRENT
 
 #endif
@@ -201,13 +201,13 @@
 /* Configuration Parameters Calculations*/
 /*******************************************************************************/
 /** Period value of PWM output waveform for center aligned */
-#define PWM_PERIOD_COUNT       (MASTER_CLK_FREQUENCY/PWM_FREQUENCY/2U)
+#define PWM_PERIOD_COUNT       (float)((float)MASTER_CLK_FREQUENCY/(float)PWM_FREQUENCY/2.0f)
 /** Initial duty cycle value */
-#define INIT_DUTY_VALUE        (PWM_PERIOD_COUNT * 0.0)
+#define INIT_DUTY_VALUE        (float)(PWM_PERIOD_COUNT * 0.0f)
 
 #define MAX_DUTY                        (PWM_PERIOD_COUNT)
-#define FAST_LOOP_TIME_SEC              (float)(1/(float)PWM_FREQUENCY) /* Always runs in sync with PWM */
-#define SLOW_LOOP_TIME_SEC              (float)(FAST_LOOP_TIME_SEC * 100) /* 100 times slower than Fast Loop */
+#define FAST_LOOP_TIME_SEC              (float)(1.0f/(float)PWM_FREQUENCY) /* Always runs in sync with PWM */
+#define SLOW_LOOP_TIME_SEC              (float)(FAST_LOOP_TIME_SEC * 100.0f) /* 100 times slower than Fast Loop */
 
 /* Motor Start-up configuration parameters */
 #define LOCK_TIME_IN_SEC                (2)   /* Startup - Rotor alignment time */
@@ -226,34 +226,34 @@
 #define ADC_CURRENT_SCALE             ((float)(MAX_CURRENT/(float)(2048)))
 #define DCBUS_SENSE_RATIO             (float)(DCBUS_SENSE_BOTTOM_RESISTOR/(DCBUS_SENSE_BOTTOM_RESISTOR + DCBUS_SENSE_TOP_RESISTOR))
 #define VOLTAGE_ADC_TO_PHY_RATIO      (float)(MAX_ADC_INPUT_VOLTAGE/(MAX_ADC_COUNT * DCBUS_SENSE_RATIO))
-#define SLOW_LOOP_TIME_PWM_COUNT      (int32_t)(SLOW_LOOP_TIME_SEC / FAST_LOOP_TIME_SEC) /* 100 times slower than Fast Loop */
-#define LOCK_COUNT_FOR_LOCK_TIME      (uint32_t)((float)LOCK_TIME_IN_SEC/(float)FAST_LOOP_TIME_SEC)
-#define OPEN_LOOP_END_SPEED_RPS       ((float)OPEN_LOOP_END_SPEED_RPM/60)
+#define SLOW_LOOP_TIME_PWM_COUNT      (uint32_t)(SLOW_LOOP_TIME_SEC / FAST_LOOP_TIME_SEC) /* 100 times slower than Fast Loop */
+#define LOCK_COUNT_FOR_LOCK_TIME      (float)((float)LOCK_TIME_IN_SEC/(float)FAST_LOOP_TIME_SEC)
+#define OPEN_LOOP_END_SPEED_RPS       ((float)OPEN_LOOP_END_SPEED_RPM/60.0f)
 
 /* Rated speed of the motor in RPM */
-#define RATED_SPEED_RAD_PER_SEC_ELEC                     (float)(RATED_SPEED_RPM *(2*(float)M_PI/60) * NUM_POLE_PAIRS)
-#define CLOSE_LOOP_RAMP_RATE                              (500) /* RPM per sec */
-#define RAMP_RAD_PER_SEC_ELEC                             (float)(CLOSE_LOOP_RAMP_RATE * NUM_POLE_PAIRS * PI/30.0)
+#define RATED_SPEED_RAD_PER_SEC_ELEC                     (float)(RATED_SPEED_RPM *(2.0*(float)M_PI/60.0f) * NUM_POLE_PAIRS)
+#define CLOSE_LOOP_RAMP_RATE                              (500.0f) /* RPM per sec */
+#define RAMP_RAD_PER_SEC_ELEC                             (float)(CLOSE_LOOP_RAMP_RATE * NUM_POLE_PAIRS * PI/30.0f)
 #define SPEED_RAMP_INC_SLOW_LOOP                          (float)(RAMP_RAD_PER_SEC_ELEC*SLOW_LOOP_TIME_SEC)
 
 /* Open loop end speed conversions */
-#define SINGLE_ELEC_ROT_RADS_PER_SEC                      ((float)((float)(2.0) * (float)M_PI))
+#define SINGLE_ELEC_ROT_RADS_PER_SEC                      ((float)((float)(2.0f) * (float)M_PI))
 #define END_SPEED_RADS_PER_SEC_MECH                       (float)(OPEN_LOOP_END_SPEED_RPS * SINGLE_ELEC_ROT_RADS_PER_SEC)
-#define OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC             (float)(END_SPEED_RADS_PER_SEC_MECH * NUM_POLE_PAIRS)
-#define OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME (float)(OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC * FAST_LOOP_TIME_SEC)
-#define OPEN_LOOP_RAMPSPEED_INCREASERATE                  (float)(OPEN_LOOP_END_SPEED_RADS_PER_SEC_ELEC_IN_LOOPTIME/(OPEN_LOOP_RAMP_TIME_IN_SEC/FAST_LOOP_TIME_SEC))
+#define OPNLP_END_SPEED_RDPS_ELEC             (float)(END_SPEED_RADS_PER_SEC_MECH * NUM_POLE_PAIRS)
+#define OPNLP_END_SPEED_RDPS_ELEC_IN_LOOPTIME (float)(OPNLP_END_SPEED_RDPS_ELEC * FAST_LOOP_TIME_SEC)
+#define OPEN_LOOP_RAMPSPEED_INCREASERATE                  (float)(OPNLP_END_SPEED_RDPS_ELEC_IN_LOOPTIME/(OPEN_LOOP_RAMP_TIME_IN_SEC/FAST_LOOP_TIME_SEC))
 
 /* BEMF constant */
-#define MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH       (float)((MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH/SQRT3)/1000.0)
-#define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_PER_RPM_MECH * (float)(2.0 * M_PI/60.0))
-#define MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_ELEC   (float)(MOTOR_BEMF_CONST_V_PEAK_PHASE_RAD_PER_SEC_MECH * NUM_POLE_PAIRS)
+#define BEMF_CNST_Vpk_PH_PER_RPM_MECH       (float)((MOTOR_BEMF_CONST_V_PEAK_LL_KRPM_MECH/SQRT3)/1000.0f)
+#define BEMF_CNST_Vpk_PH_RDPS_MECH   (float)(BEMF_CNST_Vpk_PH_PER_RPM_MECH * (float)(2.0f * (float)M_PI/60.0f))
+#define BEMF_CNST_Vpk_PH_RDPS_ELEC   (float)(BEMF_CNST_Vpk_PH_RDPS_MECH * NUM_POLE_PAIRS)
 
-#define ENCODER_PULSES_PER_EREV                          (uint16_t)(ENCODER_PULSES_PER_REV/NUM_POLE_PAIRS)
+#define ENCODER_PULSES_PER_EREV                          (uint16_t)((uint16_t)ENCODER_PULSES_PER_REV/(uint16_t)NUM_POLE_PAIRS)
 
-#define MAX_SPEED_RAD_PER_SEC_ELEC          (float)(((RATED_SPEED_RPM/60)*2*(float)M_PI)*NUM_POLE_PAIRS)
+#define MAX_SPEED_RDPS_ELEC          (float)(((RATED_SPEED_RPM/60.0f)*2.0f*(float)M_PI)*NUM_POLE_PAIRS)
 
-#define MAX_STATOR_VOLT_SQUARE              (float)(0.98 * 0.98)
-#define POT_ADC_COUNT_FW_SPEED_RATIO        (float)(MAX_SPEED_RAD_PER_SEC_ELEC/MAX_ADC_COUNT)
+#define MAX_STATOR_VOLT_SQUARE              (float)(0.98f * 0.98f)
+#define POT_ADC_COUNT_FW_SPEED_RATIO        (float)(MAX_SPEED_RDPS_ELEC/MAX_ADC_COUNT)
 #define QDEC_RC 65535u              
 #define QDEC_UPPER_THRESHOLD 49151u   
 #define QDEC_LOWER_THRESHOLD 16384u  

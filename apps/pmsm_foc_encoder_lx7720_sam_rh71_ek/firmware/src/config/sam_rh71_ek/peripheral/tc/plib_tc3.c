@@ -95,13 +95,13 @@ uint32_t TC3_CH0_CaptureFrequencyGet( void )
 /* Read last captured value of Capture A */
 uint32_t TC3_CH0_CaptureAGet (void)
 {
-    return TC3_REGS->TC_CHANNEL[0].TC_RA;
+    return (uint32_t)TC3_REGS->TC_CHANNEL[0].TC_RA;
 }
 
 /* Read last captured value of Capture B */
 uint32_t TC3_CH0_CaptureBGet (void)
 {
-    return TC3_REGS->TC_CHANNEL[0].TC_RB;
+    return (uint32_t)TC3_REGS->TC_CHANNEL[0].TC_RB;
 }
 
 TC_CAPTURE_STATUS TC3_CH0_CaptureStatusGet(void)
@@ -150,13 +150,13 @@ uint32_t TC3_CH1_CaptureFrequencyGet( void )
 /* Read last captured value of Capture A */
 uint32_t TC3_CH1_CaptureAGet (void)
 {
-    return TC3_REGS->TC_CHANNEL[1].TC_RA;
+    return (uint32_t)TC3_REGS->TC_CHANNEL[1].TC_RA;
 }
 
 /* Read last captured value of Capture B */
 uint32_t TC3_CH1_CaptureBGet (void)
 {
-    return TC3_REGS->TC_CHANNEL[1].TC_RB;
+    return (uint32_t)TC3_REGS->TC_CHANNEL[1].TC_RB;
 }
 
 TC_CAPTURE_STATUS TC3_CH1_CaptureStatusGet(void)
@@ -205,13 +205,13 @@ uint32_t TC3_CH2_CaptureFrequencyGet( void )
 /* Read last captured value of Capture A */
 uint32_t TC3_CH2_CaptureAGet (void)
 {
-    return TC3_REGS->TC_CHANNEL[2].TC_RA;
+    return (uint32_t)TC3_REGS->TC_CHANNEL[2].TC_RA;
 }
 
 /* Read last captured value of Capture B */
 uint32_t TC3_CH2_CaptureBGet (void)
 {
-    return TC3_REGS->TC_CHANNEL[2].TC_RB;
+    return (uint32_t)TC3_REGS->TC_CHANNEL[2].TC_RB;
 }
 
 TC_CAPTURE_STATUS TC3_CH2_CaptureStatusGet(void)

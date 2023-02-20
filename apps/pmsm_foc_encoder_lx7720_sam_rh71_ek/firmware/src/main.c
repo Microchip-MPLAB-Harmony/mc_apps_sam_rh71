@@ -68,8 +68,10 @@ int main ( void )
     SYS_Initialize ( NULL );
     X2CScope_Init();
 
-    /* Filter any unexpected initial state on start switch */
-    while (!SWITCH_START_Get());
+    /* Filter any unexpected initial state  on start switch */
+    while (SWITCH_START_Get()!=1U){
+        /*wait state*/
+    }
 
     while ( true )
     {

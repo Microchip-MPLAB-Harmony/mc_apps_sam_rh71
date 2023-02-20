@@ -83,9 +83,9 @@ extern "C" {
 #define SQRT3                     ((float)1.732)
 #define ANGLE_OFFSET_MIN          ((float)(M_PI_2)/(float)(32767))
 
-#define TOTAL_SINE_TABLE_ANGLE      (2*(float)M_PI)
+#define TOTAL_SINE_TABLE_ANGLE      (float)(2.0f*(float)M_PI)
 #define ANGLE_STEP                  (TOTAL_SINE_TABLE_ANGLE/(float)TABLE_SIZE)
-#define TABLE_SIZE  256
+#define TABLE_SIZE  256U
 
 
 

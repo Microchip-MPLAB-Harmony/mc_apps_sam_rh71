@@ -1,3 +1,14 @@
+#ifndef X2CSCOPE_H
+#define X2CSCOPE_H
+
+// *****************************************************************************
+/* MISRA C-2012 Rule 3.1, and 8.6 deviated below. Deviation record ID -  
+    H3_MISRAC_2012_R_3_1_DR_1, H3_MISRAC_2012_R_8_6_DR_1 */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#pragma coverity compliance block \
+(deviate:2 "MISRA C-2012 Rule 3.1" "H3_MISRAC_2012_R_3_1_DR_1" )\
+(deviate:2 "MISRA C-2012 Rule 8.6" "H3_MISRAC_2012_R_8_6_DR_1" )
 /*
  * Copyright (c) 2013, Linz Center of Mechatronics GmbH (LCM) http://www.lcm.at/
  * All rights reserved.
@@ -30,14 +41,14 @@
 /*
  * This file is part of X2C. http://www.mechatronic-simulation.org/
  */
-#ifndef X2CSCOPE_H
-#define X2CSCOPE_H
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #include <stdint.h>
+#include "definitions.h"
 
 void X2CScope_Init(void);
 void X2CScope_Communicate(void);
@@ -47,4 +58,8 @@ void X2CScope_Update(void);
 }
 #endif
 
+#pragma coverity compliance end_block "MISRA C-2012 Rule 3.1"
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.6"
+#pragma GCC diagnostic pop
+/* MISRAC 2012 deviation block end */
 #endif

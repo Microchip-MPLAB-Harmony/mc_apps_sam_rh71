@@ -95,13 +95,13 @@ extern "C" {
 #define SQRT3                     ((float)1.732)
 #define ANGLE_OFFSET_MIN          ((float)(M_PI_2)/(float)(32767))
     
-#define TOTAL_SINE_TABLE_ANGLE      (2*(float)M_PI)
-#define ANGLE_STEP                  (TOTAL_SINE_TABLE_ANGLE/(float)TABLE_SIZE)
-#define TABLE_SIZE  256
+//#define TOTAL_SINE_TABLE_ANGLE      (2*(float)M_PI)
+//#define ANGLE_STEP                  (TOTAL_SINE_TABLE_ANGLE/(float)TABLE_SIZE)
+//#define TABLE_SIZE  256
 
 /* Motor phase current offset calibration limits. */
-#define CURRENT_OFFSET_MAX                (12700) /* current offset max limit in terms of ADC count*/
-#define CURRENT_OFFSET_MIN                (12300) /* current offset min limit in terms of ADC count*/
+#define CURRENT_OFFSET_MAX                (12700U) /* current offset max limit in terms of ADC count*/
+#define CURRENT_OFFSET_MIN                (12300U) /* current offset min limit in terms of ADC count*/
 
 
 typedef enum 
@@ -241,8 +241,8 @@ void MCAPP_MotorStart(void);
 void MCAPP_MotorStop(void);
 void MCAPP_MotorPIParamInit(void);
 void MCAPP_PIOutputInit( MCLIB_PI *pParm);
-
-    
+void MCAPP_ControlLoopISR(TC_COMPARE_STATUS status, uintptr_t context);
+void __attribute__ ((tcm)) MCAPP_CurrentSNSCountISR(TC_TIMER_STATUS status, uintptr_t context);  
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 

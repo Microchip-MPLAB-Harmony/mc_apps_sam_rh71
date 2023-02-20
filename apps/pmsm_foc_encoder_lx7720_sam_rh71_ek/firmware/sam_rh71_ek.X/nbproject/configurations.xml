@@ -240,6 +240,7 @@
         <itemPath>../src/X2CScopeCommunication.c</itemPath>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
+      <itemPath>../src/config/sam_rh71_ek/pin_configurations.csv</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

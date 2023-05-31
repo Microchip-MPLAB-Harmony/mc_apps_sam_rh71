@@ -702,7 +702,7 @@ void __attribute__ ((tcm)) MCAPP_CurrentSNSCountISR(TC_TIMER_STATUS status, uint
     // Limit sinc1_out value in case of counter error
     if (gCurrentU.sinc1_out > 200U)
     {
-        gCurrentU.sinc1_out = 100U;
+        gCurrentU.sinc1_out = 200U;
     }
     temp2 =gCurrentU.intg2;
     gCurrentU.intg3 = (gCurrentU.intg3 + temp2);
@@ -720,9 +720,9 @@ void __attribute__ ((tcm)) MCAPP_CurrentSNSCountISR(TC_TIMER_STATUS status, uint
     gCurrentV.sinc1_prevq = currentVActive;
     
     // Limit sinc1_out value in case of counter error
-    if (gCurrentU.sinc1_out > 200U)
+    if (gCurrentV.sinc1_out > 200U)
     {
-        gCurrentU.sinc1_out = 100U;
+        gCurrentV.sinc1_out = 200U;
     }
     temp2=gCurrentV.intg2;
     gCurrentV.intg3 = (gCurrentV.intg3 + temp2);

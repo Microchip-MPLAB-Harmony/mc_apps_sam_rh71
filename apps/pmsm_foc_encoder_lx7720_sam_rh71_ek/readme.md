@@ -12,7 +12,7 @@ has_toc: false
 This example shows how to perform motor control using the SAMRH71-EK board connected to the LX7720 board. The control strategy is the sensored FOC, in which rotor position is determined by the Quadrature Encoder and speed is calculated from the position. 
 
 ## Description
-Permanent Magnet Synchronous Motor (PMSM) is controlled using Field Oriented Control (FOC). Rotor position and speed is determined from quadrature encoder in LX7720. Motor start/stop operation is controlled by the switch and motor speed can be changed by the on-board potentiometer. Waveforms and variables can be monitored at runtime using X2CScope. 
+Permanent Magnet Synchronous Motor (PMSM) is controlled using Field Oriented Control (FOC). Rotor position and speed is determined from quadrature encoder in LX7720. Motor start/stop operation and motor speed are controlled by the switches on the external control board. Waveforms and variables can be monitored at runtime using X2CScope. 
 
 Key features enabled in this project are:
 

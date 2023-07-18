@@ -275,7 +275,7 @@ __STATIC_INLINE void MCAPP_MotorAngleCalc(void)
     {
       gfocParam.angle = gPositionCalc.rotor_angle_rad_per_sec - (2.0f*(float)M_PI);
     }
-    else if(gPositionCalc.rotor_angle_rad_per_sec < 2.0f)
+    else if(gPositionCalc.rotor_angle_rad_per_sec < 0.0f)
     {
       gfocParam.angle = 2.0f*(float)M_PI + gPositionCalc.rotor_angle_rad_per_sec;
     }
@@ -498,21 +498,23 @@ void MCAPP_ControlLoopISR(TC_COMPARE_STATUS status, uintptr_t context)
 {    
     float phaseCurrentU;
     float phaseCurrentV;
-    uint32_t temp;
+    float temp;
     X2CScope_Update();
-    /* PB17 GPIO is used for timing measurement. - Set High*/
+   
+   /* PB17 GPIO is used for timing measurement. - Set High*/
     PIOB_REGS->PIO_SODR = (uint32_t)((uint32_t)1U << (17U & 0x1FU));
 
  	/* Weight average on 4 last samples */
-    temp=2U*gCurrentU.sinc3_out;
-    temp+=4U*gCurrentU.sinc3_out_p;
-    temp+=3U*gCurrentU.sinc3_out_pp;
-    temp+=gCurrentU.sinc3_out_ppp;
+    temp = 2.0f * (float)gCurrentU.sinc3_out;
+    temp += 4.0f * (float)gCurrentU.sinc3_out_p;
+    temp += 3.0f * (float)gCurrentU.sinc3_out_pp;
+    temp += (float)gCurrentU.sinc3_out_ppp;
     phaseCurrentU = ((float)temp / 10.0f);
-    temp=2U*gCurrentV.sinc3_out;
-    temp+=4U*gCurrentV.sinc3_out_p;
-    temp+=3U*gCurrentV.sinc3_out_pp;
-    temp+=gCurrentV.sinc3_out_ppp;
+	
+    temp = 2.0f * (float)gCurrentV.sinc3_out;
+    temp +=4.0f * (float)gCurrentV.sinc3_out_p;
+    temp +=3.0f * (float)gCurrentV.sinc3_out_pp;
+    temp += (float)gCurrentV.sinc3_out_ppp;
     phaseCurrentV = ((float)temp / 10.0f);
 
     /* Remove the offset from measured motor currents */

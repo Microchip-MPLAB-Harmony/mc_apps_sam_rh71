@@ -19,7 +19,7 @@
   },"3": {
     "doc": "Encoder based PMSM FOC using SAM RH71 EK and LX7720 DB",
     "title": "Description",
-    "content": "Permanent Magnet Synchronous Motor (PMSM) is controlled using Field Oriented Control (FOC). Rotor position and speed is determined from quadrature encoder in LX7720. Motor start/stop operation is controlled by the switch and motor speed can be changed by the on-board potentiometer. Waveforms and variables can be monitored at runtime using X2CScope. Key features enabled in this project are: . | Dual shunt current measurement | Speed control loop | . ",
+    "content": "Permanent Magnet Synchronous Motor (PMSM) is controlled using Field Oriented Control (FOC). Rotor position and speed is determined from quadrature encoder in LX7720. Motor start/stop operation and motor speed are controlled by the switches on the external control board. Waveforms and variables can be monitored at runtime using X2CScope. Key features enabled in this project are: . | Dual shunt current measurement | Speed control loop | . ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html#description",
     "relUrl": "/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html#description"
   },"4": {

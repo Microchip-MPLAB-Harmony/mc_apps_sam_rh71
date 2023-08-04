@@ -10,6 +10,3 @@ package:
     - name: "csp"
       type: "package"
       version: "3.17.0"
-    - name: "x2c"
-      type: "package"
-      version: "v1.4.0"

@@ -19,7 +19,7 @@ Key features enabled in this project are:
 - Dual shunt current measurement
 - Speed control loop
 
-## MPLAB Harmony Configurations 
+## MCC Configurations 
 ![MHC Project Graph](images/pmsm_foc_encoder_sam_rh71_project_graph.jpg)
 
 
@@ -75,4 +75,3 @@ To build the application, refer to the following table and open the project usin
 | Project Name      | Description                                    | Demo User Guide |
 | ----------------- | ---------------------------------------------- | ------------------ | 
 | sam_rh71_ek.X | MPLABX project for SAM RH71 Evaluation Kit and LX7720 Daughter Board | [Hardware Setup and Running The Application on SAM RH71 Evaluation Kit  with LX7720 Daughter Board](../docs/sam_rh71_ek_board_lx7720_db.md)
-||||

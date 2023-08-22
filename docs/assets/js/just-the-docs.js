@@ -25,10 +25,10 @@ var myVariable = `
     "relUrl": "/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html#description"
   },"4": {
     "doc": "Encoder based PMSM FOC using SAM RH71 EK and LX7720 DB",
-    "title": "MPLAB Harmony Configurations",
+    "title": "MCC Configurations",
     "content": ". | PWM Peripheral: . | This peripheral is used to generated three phases synchronous PWM waveforms. Fault functionality is also enabled to switch off the output waveforms asynchronously | . | TC Peripherals: . | TC0 . | Channel 0 to trigger periodic PWM duty updates. | Channel 1 to trigger periodic interrupt for current sampling in TC3. | . | TC1 . | This peripheral is used in quadrature encoder mode for position measurement | . | TC3 . | Used for sampling the sigma delta modulators signals from LX7720 board. | . | . | FLEXCOM Peripheral: . | The UART is used for X2CScope communication to observe graphs and variable values in run time. | . | . ",
-    "url": "http://localhost:4000/mc_apps_sam_rh71/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html#mplab-harmony-configurations",
-    "relUrl": "/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html#mplab-harmony-configurations"
+    "url": "http://localhost:4000/mc_apps_sam_rh71/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html#mcc-configurations",
+    "relUrl": "/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html#mcc-configurations"
   },"5": {
     "doc": "Encoder based PMSM FOC using SAM RH71 EK and LX7720 DB",
     "title": "Algorithm and current measurement",
@@ -38,7 +38,7 @@ var myVariable = `
   },"6": {
     "doc": "Encoder based PMSM FOC using SAM RH71 EK and LX7720 DB",
     "title": "Development Kits",
-    "content": "SAM RH71 Evaluation Kit and LX7720 Daughter Board . Downloading and building the application . To clone or download this application from Github, go to the main page of this repository and then click Clone button to clone this repository or download as zip file. This content can also be downloaded using content manager by following these instructions. Path of the application within the repository is apps/pmsm_foc_encoder_lx7720_sam_rh71_ek . To build the application, refer to the following table and open the project using its IDE. | Project Name | Description | Demo User Guide | . | sam_rh71_ek.X | MPLABX project for SAM RH71 Evaluation Kit and LX7720 Daughter Board | Hardware Setup and Running The Application on SAM RH71 Evaluation Kit with LX7720 Daughter Board | . |   |   |   | . ",
+    "content": "SAM RH71 Evaluation Kit and LX7720 Daughter Board . Downloading and building the application . To clone or download this application from Github, go to the main page of this repository and then click Clone button to clone this repository or download as zip file. This content can also be downloaded using content manager by following these instructions. Path of the application within the repository is apps/pmsm_foc_encoder_lx7720_sam_rh71_ek . To build the application, refer to the following table and open the project using its IDE. | Project Name | Description | Demo User Guide | . | sam_rh71_ek.X | MPLABX project for SAM RH71 Evaluation Kit and LX7720 Daughter Board | Hardware Setup and Running The Application on SAM RH71 Evaluation Kit with LX7720 Daughter Board | . ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html#development-kits",
     "relUrl": "/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html#development-kits"
   },"7": {
@@ -55,53 +55,59 @@ var myVariable = `
     "relUrl": "/release_notes.html#microchip-mplab-harmony-3-release-notes"
   },"9": {
     "doc": "Release notes",
+    "title": "Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAMRH71 family v3.3.0",
+    "content": "Applications . | Development Board | Number of Applications | . | SAMRH71F20-EK Evaluation Kit LX7720 Daughter Board | 1 | . New Features . | MISRA-C Compliance for motor control files | . Known Issues . None . Required MPLAB Harmony v3 Modules . | csp v3.17.0 | x2c v1.4.0 | dev_packs v3.17.0 | . Development Tools . | MPLAB X IDE v6.10 | MPLAB XC32 C/C++ Compiler v4.30 | MPLAB X IDE plug-ins: . | MPLAB Code Configurator (MCC) v5.3.7 | X2CScope v1.3.3. | . | . ",
+    "url": "http://localhost:4000/mc_apps_sam_rh71/release_notes.html#microchip-mplab-harmony-3-motor-control-application-examples-for-samrh71-family-v330",
+    "relUrl": "/release_notes.html#microchip-mplab-harmony-3-motor-control-application-examples-for-samrh71-family-v330"
+  },"10": {
+    "doc": "Release notes",
     "title": "Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAMRH71 family v3.2.0",
-    "content": "Applications . | Development Board | Number of Applications | . | SAMRH71F20-EK Evaluation Kit LX7720 Daughter Board | 1 | . New Features . | Migrated the MHC generated code to MCC generated code. | . Known Issues . None . Required MPLAB Harmony v3 Modules . | csp v3.11.0 | x2c v1.2.0 | motor_control v3.8.0 | dev_packs v3.11.0 | mcc v1.0.9 | . Development Tools . | MPLAB X IDE v6.00 | MPLAB XC32 C/C++ Compiler v4.00 | MPLAB X IDE plug-ins: . | MPLAB Code Configurator (MCC) v5.1.1 | X2CScope v1.3.0. | . | . ",
+    "content": "Applications . | Development Board | Number of Applications | . | SAMRH71F20-EK Evaluation Kit LX7720 Daughter Board | 1 | . New Features . | Migrated the MHC generated code to MCC generated code. | . Known Issues . None . Required MPLAB Harmony v3 Modules . | csp v3.11.0 | x2c v1.2.0 | motor_control v3.8.0 | dev_packs v3.11.0 | mcc v1.1.0 | . Development Tools . | MPLAB X IDE v6.00 | MPLAB XC32 C/C++ Compiler v4.00 | MPLAB X IDE plug-ins: . | MPLAB Code Configurator (MCC) v5.1.2 | X2CScope v1.3.0. | . | . ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/release_notes.html#microchip-mplab-harmony-3-motor-control-application-examples-for-samrh71-family-v320",
     "relUrl": "/release_notes.html#microchip-mplab-harmony-3-motor-control-application-examples-for-samrh71-family-v320"
-  },"10": {
+  },"11": {
     "doc": "Release notes",
     "title": "Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAMRH71 family v3.1.0",
     "content": "Applications . | Development Board | Number of Applications | . | SAMRH71F20-EK Evaluation Kit LX7720 Daughter Board | 1 | . New Features . None . Known Issues . None . Required MPLAB Harmony v3 Modules . | csp v3.9.1 | x2c v1.1.4 | motor_control v3.7.0 | dev_packs v3.9.0 | mhc v3.8.0 | . Development Tools . | MPLAB X IDE v5.50 | MPLAB XC32 C/C++ Compiler v3.01 | MPLAB X IDE plug-ins: . | MPLAB Harmony Configurator (MHC) v3.6.4 | X2CScope v1.3.0. | . | . ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/release_notes.html#microchip-mplab-harmony-3-motor-control-application-examples-for-samrh71-family-v310",
     "relUrl": "/release_notes.html#microchip-mplab-harmony-3-motor-control-application-examples-for-samrh71-family-v310"
-  },"11": {
+  },"12": {
     "doc": "Release notes",
     "title": "Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAMRH71 family v3.0.0",
     "content": "Applications . Applications migrated from motor_control repository to this application repository for SAMRH71 family. | Development Board | Number of Applications | . | SAMRH71F20-EK Evaluation Kit LX7720 Daughter Board | 1 | . Required MPLAB Harmony v3 Modules . | csp v3.8.3 | x2c v1.1.3 | motor_control v3.6.0 | dev_packs v3.8.0 | mhc v3.6.5 | . Development Tools . | MPLAB X IDE v5.45 | MPLAB XC32 C/C++ Compiler v2.50 | MPLAB X IDE plug-ins: . | MPLAB Harmony Configurator (MHC) v3.6.2 | X2CScope v1.3.0. | . | . ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/release_notes.html#microchip-mplab-harmony-3-motor-control-application-examples-for-samrh71-family-v300",
     "relUrl": "/release_notes.html#microchip-mplab-harmony-3-motor-control-application-examples-for-samrh71-family-v300"
-  },"12": {
+  },"13": {
     "doc": "Release notes",
     "title": "Release notes",
     "content": ". ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/release_notes.html",
     "relUrl": "/release_notes.html"
-  },"13": {
+  },"14": {
     "doc": "Setup for quadrature encoder mode",
     "title": "SAM RH71 Evaluation Kit with LX7720 Daughter Board",
     "content": " ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/apps/docs/sam_rh71_ek_board_lx7720_db.html#sam-rh71-evaluation-kit-with-lx7720-daughter-board",
     "relUrl": "/apps/docs/sam_rh71_ek_board_lx7720_db.html#sam-rh71-evaluation-kit-with-lx7720-daughter-board"
-  },"14": {
+  },"15": {
     "doc": "Setup for quadrature encoder mode",
     "title": "Setting up the hardware",
     "content": "| Project Name | Hardware | . | sam_rh71_ek.X | SAM RH71 Evaluation KitLX7720 Daughter BoardHurst Motor with encoder | . |   |   | . Setting up SAM RH71 Evaluation Kit and LX7720 Daughter Board . | Hardware Setup . | Connect the debugger probe to J33 | Connect the USB port on the board to the computer using a mini USB cable. | Connect the 3 motors phases to the LX board. | Connect the motor encoders A and B respectively to LX7720 BLI1 and BLI2. Connecter encoder VCC to LX7720 5V and encoder GND to LX7720 SGND. | LX7720 jumpers configuration . | SM_EN to ON with J39 | SCP forced high with J38 | Connect the followings signals between SAMRH71-EK board and LX7720 board. | . | SAMRH71F20-EK | LX7720 | . | PA4 (J24.8) | LD_IN_A_C (J20.2) | . | PA0 (J24.7) | UD_IN_A_C (J20.1) | . | PA5 (J24.6) | LD_IN_B_C (J20.6) | . | PA1 (J24.9) | UD_IN_B_C (J20.5) | . | PA6 (J24.17) | LD_IN_C_C (J20.10) | . | PA2 (J24.16) | UD_IN_C_C (J20.9) | . | PA09 (J24.3) | OC_FAULT (J20.32) | . | PC21 (J30.16) (TCLK9) | SNS_OUT_A (J20.3) | . | PC28 (J30.9) (TCLK10) | SNS_OUT_B (J20.7) | . | PB9 (J30.6) (TIOB9) | BLO2 (J20.36) | . | PB10 (J30.7) (TIOA9) | BLO1 (J20.35) | . | PA11 (J24.5) (PCK0) | MOD_CLK (J20.18) | . | PA10 (J24.4) (PCK2) | CP_CLK (J20.17) | . | Add external buttons with pullup and debounce filter . | Start/Stop switch : PA22 (J25.6) | Increase speed switch : PA23 (J25.3) | Decrease speed switch : PA24 (J25.4) | . | . | . ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/apps/docs/sam_rh71_ek_board_lx7720_db.html#setting-up-the-hardware",
     "relUrl": "/apps/docs/sam_rh71_ek_board_lx7720_db.html#setting-up-the-hardware"
-  },"15": {
+  },"16": {
     "doc": "Setup for quadrature encoder mode",
     "title": "Running The Application",
     "content": ". | Build and Program the application using the MPLAB X IDE. | Press Start/Stop switch (PA22) to start the motor, it will set LED0 indicating the control loop is running. | Increase speed with switch (PA23) and decrease speed with switch (PA24). | Stop the motor by pressing again PB0. | . ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/apps/docs/sam_rh71_ek_board_lx7720_db.html#running-the-application",
     "relUrl": "/apps/docs/sam_rh71_ek_board_lx7720_db.html#running-the-application"
-  },"16": {
+  },"17": {
     "doc": "Setup for quadrature encoder mode",
     "title": "Setup for quadrature encoder mode",
     "content": " ",
     "url": "http://localhost:4000/mc_apps_sam_rh71/apps/docs/sam_rh71_ek_board_lx7720_db.html",
     "relUrl": "/apps/docs/sam_rh71_ek_board_lx7720_db.html"
-  },"17": {
+  },"18": {
     "doc": "Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAM RH71 family",
     "title": "Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAM RH71 family",
     "content": "# Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAM RH71 family MPLAB Harmony 3 is an extension of the MPLAB® ecosystem for creating embedded firmware solutions for Microchip 32-bit SAM and PIC32 microcontroller and microprocessor devices. Refer to the following links for more information. - [Microchip SAM RH71 MCU Family](https://www.microchip.com/wwwproducts/en/SAMRH71) - [Microchip 32-bit MCUs for Motor Control Applications](https://www.microchip.com/design-centers/motor-control-and-drive/control-products/32-bit-solutions) - [Microchip 32-bit MCUs](https://www.microchip.com/design-centers/32-bit) - [Microchip 32-bit MPUs](https://www.microchip.com/design-centers/32-bit-mpus) - [Microchip MPLAB X IDE](https://www.microchip.com/mplab/mplab-x-ide) - [Microchip MPLAB Harmony](https://www.microchip.com/mplab/mplab-harmony) - [Microchip MPLAB Harmony Pages](https://microchip-mplab-harmony.github.io/) This repository contains the MPLAB® Harmony 3 Motor Control application exmaples for SAM RH71 MCU family. Users can use these examples as a reference for developing their own motor control applications. Refer to the following links for release notes and licensing information. - [Release Notes](/mc_apps_sam_rh71/release_notes.html) - [MPLAB Harmony License](/mc_apps_sam_rh71/mplab_harmony_license.html) ## Contents Summary | Folder | Description |------------|-----------------------------------------------------------| apps | Demonstration applications for Motor Control | docs | Contains documentation in html format for offline viewing (to be used only after cloning this repository onto a local machine). Use [github pages](https://microchip-mplab-harmony.github.io/mc_apps_sam_rh71/) of this repository for viewing it online. ||| ## Static Motor Control Examples These applications contain static algorithm code and peripherals are configured using MHC. Configurations can be changed in userparam.h file. | Name | Description|Control Board|Inverter Board|:-----|:-----------|:------------|:-------------| [PMSM FOC using Quadrature Encoder](/mc_apps_sam_rh71/apps/pmsm_foc_encoder_lx7720_sam_rh71_ek/readme.html) | Sensored Field Oriented Control of PMSM using Quadrature Encoder | [SAMRH71F20-EK Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/SAMRH71F20-EK) |[LX7720 Daughter Board](https://www.microsemi.com/product-directory/space-system-managers/3708-position-motor-controller-ic#resources) ||||| [![License](https://img.shields.io/badge/license-Harmony%20license-orange.svg)](https://github.com/Microchip-MPLAB-Harmony/mc/blob/master/mplab_harmony_license.md) [![Latest release](https://img.shields.io/github/release/Microchip-MPLAB-Harmony/mc.svg)](https://github.com/Microchip-MPLAB-Harmony/mc/releases/latest) [![Latest release date](https://img.shields.io/github/release-date/Microchip-MPLAB-Harmony/mc.svg)](https://github.com/Microchip-MPLAB-Harmony/mc/releases/latest) [![Commit activity](https://img.shields.io/github/commit-activity/y/Microchip-MPLAB-Harmony/mc.svg)](https://github.com/Microchip-MPLAB-Harmony/mc/graphs/commit-activity) [![Contributors](https://img.shields.io/github/contributors-anon/Microchip-MPLAB-Harmony/mc.svg)]() ____ [![Follow us on Youtube](https://img.shields.io/badge/Youtube-Follow%20us%20on%20Youtube-red.svg)](https://www.youtube.com/user/MicrochipTechnology) [![Follow us on LinkedIn](https://img.shields.io/badge/LinkedIn-Follow%20us%20on%20LinkedIn-blue.svg)](https://www.linkedin.com/company/microchip-technology) [![Follow us on Facebook](https://img.shields.io/badge/Facebook-Follow%20us%20on%20Facebook-blue.svg)](https://www.facebook.com/microchiptechnology/) [![Follow us on Twitter](https://img.shields.io/twitter/follow/MicrochipTech.svg?style=social)](https://twitter.com/MicrochipTech) [![](https://img.shields.io/github/stars/Microchip-MPLAB-Harmony/mc.svg?style=social)]() [![](https://img.shields.io/github/watchers/Microchip-MPLAB-Harmony/mc.svg?style=social)]() ",
@@ -115,7 +121,7 @@ var data_for_search
 var repo_name = "mc_apps_sam_rh71";
 var doc_folder_name = "docs";
 var localhost_path = "http://localhost:4000/";
-var home_index_string = "Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAM RH71 family";
+var home_index_string = "Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAMRH71 family";
 
 (function (jtd, undefined) {
 

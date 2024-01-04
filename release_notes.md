@@ -8,6 +8,25 @@ nav_order: 99
 
 # Microchip MPLAB® Harmony 3 Release Notes
 
+## Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAMRH71 family v3.3.1
+
+### Applications
+
+| Development Board | Number of Applications | 
+| --- | --- | 
+|[SAMRH71F20-EK Evaluation Kit](https://www.microchip.com/DevelopmentTools/ProductDetails/PartNO/SAMRH71F20-EK) <br> [LX7720 Daughter Board](https://www.microsemi.com/product-directory/space-system-managers/3708-position-motor-controller-ic#resources) | 1 |
+
+### Bug fixes
+* Updated the package.yml file
+
+### Known Issues
+None
+
+### Required MPLAB Harmony v3 Modules
+* csp v3.17.0
+* x2c v1.4.0
+* dev_packs v3.17.0
+
 
 ## Microchip MPLAB® Harmony 3 Motor Control Application Examples for SAMRH71 family v3.3.0
 

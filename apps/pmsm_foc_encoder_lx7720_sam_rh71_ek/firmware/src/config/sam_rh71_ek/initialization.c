@@ -172,6 +172,7 @@ void SYS_Initialize ( void* data )
 
 
 
+    X2Cscope_Init();
 
     #pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"
     #pragma coverity compliance end_block "MISRA C-2012 Rule 11.8"

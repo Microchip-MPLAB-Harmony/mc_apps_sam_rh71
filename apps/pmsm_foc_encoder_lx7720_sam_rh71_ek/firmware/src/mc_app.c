@@ -50,8 +50,7 @@
 #include "mc_app.h"
 #include "userparams.h"
 #include "CMSIS/Core/Include/core_cm7.h"
-#include "X2CScope.h"
-#include "X2CScopeCommunication.h"
+#include "X2Cscope.h"
 #include "math.h"
 
 /******************************************************************************/
@@ -499,7 +498,7 @@ void MCAPP_ControlLoopISR(TC_COMPARE_STATUS status, uintptr_t context)
     float phaseCurrentU;
     float phaseCurrentV;
     float temp;
-    X2CScope_Update();
+    X2Cscope_Update();
    
    /* PB17 GPIO is used for timing measurement. - Set High*/
     PIOB_REGS->PIO_SODR = (uint32_t)((uint32_t)1U << (17U & 0x1FU));

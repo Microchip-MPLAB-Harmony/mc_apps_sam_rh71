@@ -53,8 +53,7 @@
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "definitions.h"                // SYS function prototypes
 #include "mc_app.h"
-#include "X2CScope.h"
-#include "X2CScopeCommunication.h"
+#include "X2CscopeComm.h"
 
 
 // *****************************************************************************
@@ -62,11 +61,12 @@
 // Section: Main Entry Point
 // *****************************************************************************
 // *****************************************************************************
+
 int main ( void )
 {
     /* Initialize all modules */
     SYS_Initialize ( NULL );
-    X2CScope_Init();
+
 
     /* Filter any unexpected initial state  on start switch */
     while (SWITCH_START_Get()!=1U){
@@ -76,7 +76,7 @@ int main ( void )
     while ( true )
     {
         MCAPP_Tasks();
-        X2CScope_Communicate();
+        X2Cscope_Communicate();
     }
 
     /* Execution should not come here during normal operation */
